@@ -15,6 +15,10 @@ import { UsersPage } from './pages/users/UsersPage'
 import { SettingsPage } from './pages/settings/SettingsPage'
 import { HomeClient } from './pages/home/HomeClient'
 import { Navbar } from './components/common/Navbar'
+import { SmartphonesPage } from './pages/home/SmartphonesPage'
+import { AcessoriosPage } from './pages/home/AcessoriosPage'
+import { TabletPage } from './pages/home/TabletPage'
+import { ContactoPage } from './pages/home/ContactoPage'
 
 
 //Components
@@ -100,6 +104,30 @@ if(isChecking){
             {!isAdmin && isAuth && <HomeClient />}
           </PrivateRoute>
          } />
+         <Route path='/smartphones' element={ 
+          <PrivateRoute>
+            <SmartphonesPage /> 
+          </PrivateRoute>
+         } />
+
+         <Route path='/acessorios' element={ 
+          <PrivateRoute>
+            <AcessoriosPage /> 
+          </PrivateRoute>
+         } />
+
+          <Route path='/tablets' element={ 
+          <PrivateRoute>
+            <TabletPage /> 
+          </PrivateRoute>
+         } />
+
+         <Route path='/contacto' element={ 
+          <PrivateRoute>
+            <ContactoPage /> 
+          </PrivateRoute>
+         } />
+
          <Route path='/products' element={ 
           <PrivateRoute>
             <ProductPage />

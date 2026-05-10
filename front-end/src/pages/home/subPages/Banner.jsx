@@ -4,6 +4,7 @@ import { Pagination, Autoplay } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
+import { Link } from 'react-router-dom';
 
 export const Banner = () => {
 
@@ -11,7 +12,7 @@ export const Banner = () => {
     {
       status: "Em produção",
       productId: 1,
-      image: "https://www.apple.com/newsroom/images/2023/09/apple-unveils-iphone-15-pro-and-iphone-15-pro-max/tile/Apple-iPhone-15-Pro-lineup-hero-230912.jpg.landing-big_2x.jpg",
+      image: "/i15.png",
       description: {
         title: "iPhone 15 Pro Max",
         subtitle: "Titânio. Forte. Leve. Incrível.",
@@ -21,21 +22,21 @@ export const Banner = () => {
     {
       status: "Lançamento",
       productId: 2,
-      image: "https://article.images.consumerreports.org/image/upload/w_652,f_auto,q_auto,ar_16:9,c_lfill/v1737572842/prod/content/dam/CRO-Images-2025/Electronics/CR-Tech-Inlinehero-samsung-galaxy-s25-launch-0125",
+      image: "/s25.png",
       description: {
-        title: "iPhone 12",
+        title: "S25 Ultra",
         subtitle: "Leve e poderoso.",
-        content: "Com esse smartphone você pode registrar momentos incríveis.",
+        content: "Celular com incríveis toques da Samsung.",
       },
     },
     {
       status: "Lançamento",
       productId: 3,
-      image: "https://images.samsung.com/africa_pt/smartphones/galaxy-s25/images/galaxy-s25-share-image.jpg",
+      image: "/i12.png",
       description: {
-        title: "Samsung S25",
-        subtitle: "Alumínio e vidro premium.",
-        content: "O mais recente modelo da Samsung com câmeras incríveis.",
+        title: "Iphone 12",
+        subtitle: "Alumínio.",
+        content: "Experimente o Apple inteligence na sua potência máxima.",
       },
     },
   ];
@@ -91,9 +92,9 @@ export const Banner = () => {
                     Comprar agora
                   </button>
 
-                  <button className='border border-white/20 bg-white/5 backdrop-blur-md px-4 sm:px-6 py-2 sm:py-3 rounded-xl hover:bg-white hover:text-black transition text-sm sm:text-base'>
+                  <Link to={`/smartphones/${item?.productId}`} className='border border-white/20 bg-white/5 backdrop-blur-md px-4 sm:px-6 py-2 sm:py-3 rounded-xl hover:bg-white hover:text-black transition text-sm sm:text-base'>
                     Ver detalhes
-                  </button>
+                  </Link>
                 </div>
               </div>
 
