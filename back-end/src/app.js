@@ -28,7 +28,6 @@ app.use(cors({origin:"http://localhost:3000",credentials:true}));
 app.use(Routes);
 
 
-console.log(process.env.NODE_ENV);
 if(process.env.NODE_ENV === "production"){
 
     app.use(express.static(path.join(__dirname,"front-end","dist")));
