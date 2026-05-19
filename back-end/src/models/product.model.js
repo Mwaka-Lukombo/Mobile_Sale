@@ -10,6 +10,12 @@ const productSchema = new mongoose.Schema({
     image:{url:{type:String},public_id:{type:String}},
     price:{type:Number,required:[true,"Price is Required"]},
     stock:{type:Number,required:[true,"Quantity Stock is required"]},
+    description:{type:String},
+    informations:[{
+        gigas:{type:String},
+        ram:{type:String},
+        camera:{type:String}
+    }],
     stars:{type:Number},
     orders:{type:Number},
     sold:{type:Number},
@@ -18,9 +24,9 @@ const productSchema = new mongoose.Schema({
 })
 
 
-const Product = mongoose.model("Product",productSchema);
-
-export default Product;
+export const Product = mongoose.model("Product",productSchema);
+export const Acessorio = mongoose.model("Acessorios",productSchema);
+export const Tablet = mongoose.model("Tablet",productSchema);
 
 
 

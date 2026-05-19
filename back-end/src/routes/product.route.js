@@ -2,13 +2,16 @@ import {Router} from 'express'
 import { 
     addCart,
     allProduct,
+    clientProducts,
     createProduct,
     deleteProduct,
     editProduct,
     getCart,
     getProductsByCategory,
     productSingle,
-    searchProduct
+    removeCart,
+    searchProduct,
+    updateCart
  } from '../controllers/product.controller.js';
 import { 
     isAdmin, 
@@ -27,10 +30,13 @@ router.get('/',allProduct);
 
 router.get('/productSingle/:id',productSingle);
 router.get("/by-category", getProductsByCategory);
+router.get('/clientProducts',clientProducts);
 
 router.use(protectedRoute);
 router.post('/addToCart/:id',addCart);
 router.get('/getCart',getCart);
+router.post('/updatedCart/:productId',updateCart);
+router.delete('/cartDelete/:id',removeCart);
 
 router.use(isAdmin);
 router.post('/create',createProduct);

@@ -15,12 +15,13 @@ import {
 const router = express.Router();
 
 
-router.use(protectedRoute,isAdmin);
+router.use(protectedRoute);
+router.get("/", getCategories);          
+router.get("/:id", getCategory);
 
-router.post("/", createCategory);        // criar
-router.get("/", getCategories);          // listar todas
-router.get("/:id", getCategory);         // obter uma
-router.put("/:id", updateCategory);      // atualizar
-router.delete("/:id", deleteCategory);   // excluir
+router.use(isAdmin);
+router.post("/", createCategory);                 
+router.put("/:id", updateCategory);      
+router.delete("/:id", deleteCategory);   
 
 export default router;

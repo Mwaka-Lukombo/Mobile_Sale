@@ -1,5 +1,5 @@
 // SettingsPage.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
     Store, 
@@ -22,42 +22,54 @@ import {
     Shield
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useLojaStore } from '../../store/lojaStore';
 
 export const SettingsPage = () => {
     const [activeTab, setActiveTab] = useState('general');
-    const [isLoading, setIsLoading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [editingField, setEditingField] = useState(null);
+
+    const {
+      isLoading,
+      getLoja,
+      lojaInfo,
+      updateLoja
+    } = useLojaStore();
+
+    useEffect(()=>{
+     getLoja();
+    },[getLoja]);
     
-    // Estado para o formulário geral
+    
     const [generalSettings, setGeneralSettings] = useState({
-        storeName: 'CellShopp',
-        email: 'contato@cellshopp.com',
-        phone: '+258 84 123 4567',
-        address: 'Av. Marginal, Maputo, Moçambique',
+        storeName: lojaInfo?.storeName,
+        email: lojaInfo?.email,
+        phone: lojaInfo?.phone,
+        address: lojaInfo?.address,
         website: 'www.cellshopp.com',
         taxNumber: '123456789',
-        description: 'Sua loja de confiança em dispositivos móveis'
+        description:lojaInfo?.description
     });
 
-    // Estado para o formulário de email
+    
     const [emailSettings, setEmailSettings] = useState({
         subject: '',
         message: '',
         sendTo: 'all'
     });
 
-    // Simular salvamento
+    
     const handleSaveGeneral = async () => {
-        setIsSaving(true);
+        
+
+    await updateLoja(generalSettings);
         setTimeout(() => {
             setIsSaving(false);
             setEditingField(null);
-            toast.success('Configurações salvas com sucesso!');
         }, 1000);
     };
 
-    // Simular envio de email
+    
     const handleSendEmail = async () => {
         if (!emailSettings.subject || !emailSettings.message) {
             toast.error('Preencha o assunto e a mensagem');
@@ -77,7 +89,7 @@ export const SettingsPage = () => {
         }, 1500);
     };
 
-    // Componente de campo editável
+    // Componente 
     const EditableField = ({ label, value, field, type = 'text', icon: Icon }) => (
         <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -197,6 +209,7 @@ export const SettingsPage = () => {
                                     <h2 className="text-xl font-semibold text-gray-800">Informações da Loja</h2>
                                     <p className="text-sm text-gray-500 mt-1">Configure as informações básicas da sua loja</p>
                                 </div>
+                                {/* Aqui */}
                                 <button
                                     onClick={handleSaveGeneral}
                                     disabled={isSaving}

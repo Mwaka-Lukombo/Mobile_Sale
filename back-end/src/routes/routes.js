@@ -4,7 +4,9 @@ import productRoutes from './product.route.js';
 import categoryRoutes from './category.route.js';
 import userRoutes from './user.route.js';
 import analystcRoute from './analystc.route.js';
-
+import acessoiesRoute from './acessorio.route.js';
+import tableRoute from './table.route.js';
+import lojaRoute from './loja.route.js';
 
 
 const router = Router();
@@ -17,6 +19,9 @@ router.use('/api/product',productRoutes);
 router.use('/api/category',categoryRoutes);
 router.use('/api/user',userRoutes);
 router.use('/api/analystic',analystcRoute);
+router.use('/api/acessories',acessoiesRoute);
+router.use('/api/tablet',tableRoute);
+router.use('/api/loja',lojaRoute);
 
 
 

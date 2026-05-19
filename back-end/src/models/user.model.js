@@ -11,8 +11,12 @@ const userSchema = new mongoose.Schema({
     {
       itemId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
+        refPath:"carrinho.type",
         required: true,
+      },
+      type:{
+        type:String,
+        enum:["Product","Acessorios","Tablet"]
       },
       quantity: {
         type: Number,

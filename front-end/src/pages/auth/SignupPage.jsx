@@ -22,9 +22,9 @@ export const SignupPage = () => {
         signup
       } = useAuthStore();
 
-  // Animações específicas APENAS para o lado esquerdo (mockup)
+  
   const mockupAnimations = {
-    // Animação de entrada do container principal
+    
     containerEntrance: {
       hidden: { opacity: 0, scale: 0.8, rotateY: -180 },
       visible: { 
@@ -410,7 +410,9 @@ export const SignupPage = () => {
                 placeholder='Digite seu nome completo' 
                 onChange={(e) => setName(e.target.value)}
                 value={name}
-                className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all'
+                className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all
+                bg-inherit
+                '
               />
             </div>
           </div>
@@ -424,7 +426,9 @@ export const SignupPage = () => {
                 type='email' 
                 placeholder='seu@email.com' 
                 onChange={(e)=> setEmail(e.target.value)}
-                className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all'
+                className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all
+                bg-inherit
+                '
               />
             </div>
           </div>
@@ -439,7 +443,9 @@ export const SignupPage = () => {
                 placeholder='Digite sua senha' 
                 onChange={(e)=> setPassword(e.target.value)}
                 value={password}
-                className='w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all'
+                className='w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all
+                bg-inherit
+                '
               />
               <button
                 type='button'
@@ -461,7 +467,9 @@ export const SignupPage = () => {
                 type={showConfirmPassword ? 'text' : 'password'} 
                 placeholder='Confirme sua senha' 
                 onChange={(e)=> setConfirmPassword(e.target.value)}
-                className='w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all'
+                className='w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all
+                bg-inherit
+                '
               />
               <button
                 type='button'

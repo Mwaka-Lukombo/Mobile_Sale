@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Banner } from './subPages/Banner';
 import {Link} from 'react-router-dom';
@@ -37,6 +36,7 @@ import {
 import {
  useAuthStore
 } from '../../store/authStore';
+import { useState } from 'react';
 
 // Variants de animação para Framer Motion
 const fadeInUp = {

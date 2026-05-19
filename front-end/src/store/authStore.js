@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import {axiosInstance} from '../lib/axiosInstance';
 import {create} from 'zustand';
-
+import { useProductHome } from './productHome';
 
 
 export const useAuthStore = create((set,get) => ({
@@ -80,6 +80,8 @@ export const useAuthStore = create((set,get) => ({
        const res = await axiosInstance.post(`/auth/logout`);
        toast.success(res.data.message);
        set({user:null,isAuth:false});
+
+       useProductHome.setState(cart,[]);
      }catch(error){
         console.log(error.response?.data?.message);
      }

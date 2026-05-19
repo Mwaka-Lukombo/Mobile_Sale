@@ -6,9 +6,9 @@ import { LoaderComponent } from '../../components/common/LoaderComponent'
 import { useAuthStore } from '../../store/authStore'
 
 export const LoginPage = () => {
-  // Animações específicas para o lado esquerdo (mockup)
+  
   const mockupAnimations = {
-    // Animação de entrada do container principal
+    
     containerEntrance: {
       hidden: { opacity: 0, scale: 0.8, rotateY: -180 },
       visible: { 
@@ -125,7 +125,7 @@ export const LoginPage = () => {
       }
     }
   }
-  // States para controlar visibilidade da senha
+  
   const [showPassword, setShowPassword] = useState(false);
    const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
@@ -156,7 +156,7 @@ export const LoginPage = () => {
   return (
     <div className='w-full flex flex-col md:flex-row gap-3 min-h-screen bg-[#f7f7f7] py-8 px-[4%] md:py-12'>
       
-      {/* left side - mockup Samsung S10 COM ANIMAÇÃO */}
+      {/* left side - mockup Samsung S10  */}
       <motion.div 
         className='w-full md:w-[60%] flex flex-col items-center justify-center md:block'
         variants={mockupAnimations.containerEntrance}
@@ -362,7 +362,9 @@ export const LoginPage = () => {
                 placeholder='seu@email.com' 
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
-                className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all'
+                className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all
+                bg-inherit
+                '
               />
             </div>
           </div>
@@ -377,7 +379,9 @@ export const LoginPage = () => {
                 placeholder='*******' 
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
-                className='w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all'
+                className='w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all
+                bg-inherit
+                '
               />
               <button
               

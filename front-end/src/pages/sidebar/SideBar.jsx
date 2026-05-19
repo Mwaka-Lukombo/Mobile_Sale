@@ -1,4 +1,4 @@
-import { Box, Home, LineChartIcon, LogOut, Settings, SquareChevronLeft, SquareChevronRight, Users2 } from 'lucide-react'
+import { Box, Headphones, Home, LineChartIcon, LogOut, Settings, SquareChevronLeft, SquareChevronRight, Tablet, Users2 } from 'lucide-react'
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
@@ -30,6 +30,8 @@ export const SideBar = () => {
         { icon: LineChartIcon, text: "Analytic", path: "/analytic" },
         { icon: Box, text: "Produto", path: "/products" },
         { icon: Users2, text: "Usuarios", path: "/users" },
+        { icon: Headphones, text: "Acessorios", path: "/createAcessorios" },
+        { icon: Tablet, text: "Tablets", path: "/createTablet" },
         { icon: Settings, text: "Configuracoes", path: "/settings" }
     ];
 

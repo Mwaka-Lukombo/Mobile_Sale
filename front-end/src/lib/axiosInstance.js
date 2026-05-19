@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 export const axiosInstance = axios.create({
-    baseURL:"https://mobile-sale.onrender.com/api",
+    baseURL:"http://localhost:5000/api",
     withCredentials:true
 })
 

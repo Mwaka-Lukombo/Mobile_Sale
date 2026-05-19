@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import {
   MapPin, 
   Phone, 
@@ -10,41 +10,20 @@ import {
   MessageCircle,
   CheckCircle,
   AlertCircle,
-  Store  // Adicione este
-} from 'lucide-react';
+  Store,
+  Home,
+  Menu,
+  Smartphone,
+  Headphones,
+  Tablet,
+  ChevronRight
+} from 'lucide-react'
 
 import {
-    FaInstagram, 
+  FaInstagram, 
   FaFacebook, 
   FaWhatsapp, 
 } from 'react-icons/fa'
-
-// Variants de animação
-const fadeInUp = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-}
-
-const fadeInLeft = {
-  hidden: { opacity: 0, x: -50 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } }
-}
-
-const fadeInRight = {
-  hidden: { opacity: 0, x: 50 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } }
-}
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2
-    }
-  }
-}
 
 export const ContactoPage = () => {
   const [formData, setFormData] = useState({
@@ -55,6 +34,16 @@ export const ContactoPage = () => {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  // Itens do menu de navegação
+  const menuItems = [
+    { path: "/", label: "Home", icon: Home },
+    { path: "/smartphones", label: "Smartphones", icon: Smartphone },
+    { path: "/acessorios", label: "Acessórios", icon: Headphones },
+    { path: "/tablets", label: "Tablets", icon: Tablet },
+    { path: "/contacto", label: "Contacto", icon: Home }
+  ]
 
   const handleChange = (e) => {
     setFormData({
@@ -67,7 +56,6 @@ export const ContactoPage = () => {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // Simular envio do formulário
     setTimeout(() => {
       setSubmitStatus('success')
       setIsSubmitting(false)
@@ -78,21 +66,18 @@ export const ContactoPage = () => {
         message: ''
       })
       
-      // Limpar mensagem de sucesso após 5 segundos
       setTimeout(() => {
         setSubmitStatus(null)
       }, 5000)
     }, 1500)
   }
 
-  // Informações da loja
+  // Informações da loja (simplificadas)
   const storeInfo = {
     name: "CellShop",
     address: "Av. Marginal, 1234 - Maputo, Moçambique",
     phone: "+258 84 123 4567",
-    phoneSecondary: "+258 82 987 6543",
     email: "contato@cellshop.co.mz",
-    emailSupport: "suporte@cellshop.co.mz",
     schedule: {
       week: "Segunda a Sexta: 8h às 18h",
       saturday: "Sábado: 9h às 15h",
@@ -107,27 +92,82 @@ export const ContactoPage = () => {
   ]
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={staggerContainer}
-      className="min-h-screen bg-gray-50"
-    >
-      {/* Header */}
-      <div className="bg-gradient-to-r from-primary-blue to-secondary-blue text-white py-12 px-4">
-        <div className="max-w-7xl mx-auto">
-          <motion.h1 
-            variants={fadeInUp}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
+    <div className="min-h-screen bg-gray-50">
+      {/* Header com Menu */}
+      <div className="bg-gradient-to-r from-primary-blue to-secondary-blue text-white">
+        {/* Menu de Navegação Desktop */}
+        <div className="border-b border-white/20">
+          <div className="max-w-7xl mx-auto px-4">
+            <nav className="hidden md:flex items-center justify-between">
+              <div className="flex items-center space-x-8">
+                {menuItems.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className="flex items-center gap-2 px-3 py-4 text-sm font-medium hover:text-blue-200 transition-colors border-b-2 border-transparent hover:border-blue-200"
+                  >
+                    <item.icon size={18} />
+                    <span>{item.label}</span>
+                  </Link>
+                ))}
+              </div>
+            </nav>
+          </div>
+        </div>
+
+        {/* Menu Mobile Button */}
+        <div className="md:hidden px-4 py-3 flex justify-between items-center border-b border-white/20">
+          <Link to="/" className="text-xl font-bold">
+            TechStore
+          </Link>
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-2 hover:bg-white/10 rounded-lg transition-colors"
           >
-            Contacto
-          </motion.h1>
-          <motion.p 
-            variants={fadeInUp}
-            className="text-lg md:text-xl opacity-90"
-          >
-            Estamos aqui para ajudar! Entre em contacto connosco
-          </motion.p>
+            <Menu size={24} />
+          </button>
+        </div>
+
+        {/* Mobile Menu Dropdown */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-white/10 backdrop-blur-md">
+            {menuItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center gap-3 px-6 py-4 text-sm font-medium hover:bg-white/10 transition-colors border-b border-white/10"
+              >
+                <item.icon size={18} />
+                <span>{item.label}</span>
+              </Link>
+            ))}
+          </div>
+        )}
+
+        {/* Breadcrumb e Título */}
+        <div className="py-12 px-4">
+          <div className="max-w-7xl mx-auto">
+            {/* Breadcrumb */}
+            <div className="flex items-center gap-2 text-sm mb-4">
+              <Link 
+                to="/" 
+                className="flex items-center gap-1 hover:text-blue-200 transition-colors"
+              >
+                <Home size={16} />
+                <span>Home</span>
+              </Link>
+              <ChevronRight size={14} />
+              <span className="text-blue-200">Contacto</span>
+            </div>
+
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+              Contacto
+            </h1>
+            <p className="text-lg md:text-xl opacity-90">
+              Estamos aqui para ajudar! Entre em contacto connosco
+            </p>
+          </div>
         </div>
       </div>
 
@@ -137,10 +177,7 @@ export const ContactoPage = () => {
         <div className="grid lg:grid-cols-3 gap-8">
           
           {/* Informações da Loja - Esquerda */}
-          <motion.div 
-            variants={fadeInLeft}
-            className="lg:col-span-1 space-y-6"
-          >
+          <div className="lg:col-span-1 space-y-6">
             {/* Card da Loja */}
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <div className="flex items-center gap-3 mb-6">
@@ -173,7 +210,7 @@ export const ContactoPage = () => {
                   </div>
                 </div>
 
-                {/* Telefones */}
+                {/* Telefone */}
                 <div className="flex items-start gap-3">
                   <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
                     <Phone size={16} className="text-primary-blue" />
@@ -181,11 +218,10 @@ export const ContactoPage = () => {
                   <div>
                     <p className="text-sm text-gray-500">Telefone</p>
                     <p className="font-semibold text-gray-800">{storeInfo.phone}</p>
-                    <p className="text-sm text-gray-600">{storeInfo.phoneSecondary}</p>
                   </div>
                 </div>
 
-                {/* Emails */}
+                {/* Email */}
                 <div className="flex items-start gap-3">
                   <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
                     <Mail size={16} className="text-primary-blue" />
@@ -193,7 +229,6 @@ export const ContactoPage = () => {
                   <div>
                     <p className="text-sm text-gray-500">Email</p>
                     <p className="font-semibold text-gray-800">{storeInfo.email}</p>
-                    <p className="text-sm text-gray-600">{storeInfo.emailSupport}</p>
                   </div>
                 </div>
 
@@ -217,16 +252,15 @@ export const ContactoPage = () => {
               <h3 className="font-semibold text-gray-800 mb-4">Redes Sociais</h3>
               <div className="flex gap-3">
                 {socialLinks.map((social, idx) => (
-                  <motion.a
+                  <a
                     key={idx}
                     href={social.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ scale: 1.1, y: -5 }}
-                    className={`${social.color} w-12 h-12 rounded-full flex items-center justify-center text-white hover:shadow-lg transition-all`}
+                    className={`${social.color} w-12 h-12 rounded-full flex items-center justify-center text-white hover:shadow-lg hover:scale-110 transition-all duration-300`}
                   >
                     <social.icon size={20} />
-                  </motion.a>
+                  </a>
                 ))}
               </div>
             </div>
@@ -247,13 +281,10 @@ export const ContactoPage = () => {
                 ></iframe>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Formulário de Contacto - Direita */}
-          <motion.div 
-            variants={fadeInRight}
-            className="lg:col-span-2"
-          >
+          <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-gray-800 mb-2">Envie-nos uma mensagem</h2>
@@ -264,31 +295,23 @@ export const ContactoPage = () => {
 
               {/* Status de Submissão */}
               {submitStatus === 'success' && (
-                <motion.div 
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl flex items-center gap-3"
-                >
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl flex items-center gap-3">
                   <CheckCircle className="text-green-500" size={20} />
                   <div>
                     <p className="font-semibold text-green-700">Mensagem enviada com sucesso!</p>
                     <p className="text-sm text-green-600">Entraremos em contacto em breve.</p>
                   </div>
-                </motion.div>
+                </div>
               )}
 
               {submitStatus === 'error' && (
-                <motion.div 
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-3"
-                >
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-3">
                   <AlertCircle className="text-red-500" size={20} />
                   <div>
                     <p className="font-semibold text-red-700">Erro ao enviar mensagem</p>
                     <p className="text-sm text-red-600">Tente novamente mais tarde.</p>
                   </div>
-                </motion.div>
+                </div>
               )}
 
               <form onSubmit={handleSubmit} className="space-y-5">
@@ -366,11 +389,9 @@ export const ContactoPage = () => {
                 </div>
 
                 {/* Botão Enviar */}
-                <motion.button
+                <button
                   type="submit"
                   disabled={isSubmitting}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
                   className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-white transition-all duration-300 ${
                     isSubmitting
                       ? "bg-gray-400 cursor-not-allowed"
@@ -388,7 +409,7 @@ export const ContactoPage = () => {
                       <span>Enviar Mensagem</span>
                     </>
                   )}
-                </motion.button>
+                </button>
               </form>
 
               {/* Informação adicional */}
@@ -398,58 +419,34 @@ export const ContactoPage = () => {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        {/* FAQ - Perguntas Frequentes */}
-        <motion.div 
-          variants={fadeInUp}
-          className="mt-12"
-        >
+        {/* FAQ - Apenas 2 perguntas */}
+        <div className="mt-12">
           <h2 className="text-2xl font-bold text-gray-800 text-center mb-8">
             Perguntas Frequentes
           </h2>
           
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h3 className="font-semibold text-lg text-gray-800 mb-2">Qual o prazo de entrega?</h3>
               <p className="text-gray-600">
-                O prazo de entrega varia de acordo com a localização. Em Maputo, a entrega é feita em 1-2 dias úteis. 
-                Para outras províncias, o prazo é de 3-7 dias úteis.
+                O prazo de entrega varia de acordo com a localização. Em Maputo, a entrega é feita em 1-2 dias úteis.
               </p>
             </div>
 
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h3 className="font-semibold text-lg text-gray-800 mb-2">Quais as formas de pagamento?</h3>
               <p className="text-gray-600">
-                Aceitamos pagamentos via cartão de crédito (Visa, Mastercard), transferência bancária, 
-                M-Pesa e pagamento na entrega (apenas Maputo).
-              </p>
-            </div>
-
-            <div className="bg-white rounded-2xl shadow-lg p-6">
-              <h3 className="font-semibold text-lg text-gray-800 mb-2">Como posso trocar um produto?</h3>
-              <p className="text-gray-600">
-                Você tem até 7 dias após o recebimento para solicitar troca ou devolução. 
-                Basta entrar em contacto connosco e informar o motivo.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-2xl shadow-lg p-6">
-              <h3 className="font-semibold text-lg text-gray-800 mb-2">O produto tem garantia?</h3>
-              <p className="text-gray-600">
-                Sim, todos os produtos vendidos possuem garantia oficial do fabricante, 
-                que varia de 1 a 2 anos dependendo do produto.
+                Aceitamos cartão de crédito, transferência bancária, M-Pesa e pagamento na entrega.
               </p>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Atendimento 24h */}
-        <motion.div 
-          variants={fadeInUp}
-          className="mt-12 bg-gradient-to-r from-primary-blue to-secondary-blue rounded-2xl p-8 text-white text-center"
-        >
+        {/* Atendimento WhatsApp */}
+        <div className="mt-12 bg-gradient-to-r from-primary-blue to-secondary-blue rounded-2xl p-8 text-white text-center">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <div className="bg-white/20 p-3 rounded-full">
@@ -461,19 +458,18 @@ export const ContactoPage = () => {
               </div>
             </div>
             
-            <motion.a
+            <a
               href="https://wa.me/258841234567"
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.05 }}
               className="bg-white text-primary-blue px-6 py-3 rounded-xl font-semibold flex items-center gap-2 hover:bg-gray-100 transition"
             >
               <FaWhatsapp size={20} />
               <span>WhatsApp: +258 84 123 4567</span>
-            </motion.a>
+            </a>
           </div>
-        </motion.div>
+        </div>
       </div>
-    </motion.div>
+    </div>
   )
 }

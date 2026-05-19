@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import {
   Heart,
@@ -9,13 +9,14 @@ import {
   User,
   User2,
   X,
-  Trash2,
+  ShoppingBag,
+  ArrowRight,
   Plus,
   Minus,
-  ShoppingBag,
-  ArrowRight
+  Trash
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
+import { useProductHome } from '../../store/productHome';
 import { formatNumber } from '../../lib/formatNumbers';
 
 export const Navbar = () => {
@@ -25,86 +26,35 @@ export const Navbar = () => {
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+    const [quantities, setQuantities] = useState({});
 
-  const { logout, isAdmin, isAuth } = useAuthStore();
+  const { logout, isAdmin } = useAuthStore();
 
-  // Dados de exemplo para o carrinho
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "iPhone 15 Pro Max",
-      price: 125000,
-      quantity: 1,
-      image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-max-finish-select-202309-6-7inch?wid=5120&hei=2880&fmt=webp&qlt=70&.v=1693066164573",
-      currency: "MZN"
-    },
-    {
-      id: 2,
-      name: "AirPods Pro 2",
-      price: 18500,
-      quantity: 2,
-      image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/airpods-pro-2-hero?wid=940&hei=940&fmt=png-alpha&.v=1661261865000",
-      currency: "MZN"
-    }
-  ]);
+  const {
+    getCart,
+    cart,
+    updateCart,
+    removeCart
+  } = useProductHome();
 
-  // Dados de exemplo para favoritos
-  const [wishlistItems, setWishlistItems] = useState([
-    {
-      id: 3,
-      name: "Samsung Galaxy S24 Ultra",
-      price: 115000,
-      oldPrice: 135000,
-      image: "https://images.samsung.com/africa_pt/smartphones/galaxy-s24-ultra/images/galaxy-s24-ultra-highlights-titanium-gray-back.jpg",
-      currency: "MZN",
-      discount: 15,
-      inStock: true
-    },
-    {
-      id: 4,
-      name: "iPad Air 10.9\" M1",
-      price: 95000,
-      oldPrice: 115000,
-      image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-air-hero?wid=940&hei=940&fmt=png-alpha&.v=1693066164573",
-      currency: "MZN",
-      discount: 17,
-      inStock: true
-    }
-  ]);
+  useEffect(()=>{
+    getCart()
+  },[getCart]);
+
+
+  
+  const cartProducts = cart?.cart?.map(cart => cart);
+   const totalCart = cart?.total;
+
 
   const handleSearch = (e) => {
     e.preventDefault();
     console.log('Buscando:', searchTerm, 'Categoria:', selectedCategory);
   };
 
-  const updateQuantity = (id, newQuantity) => {
-    if (newQuantity < 1) return;
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
-
-  const removeFromCart = (id) => {
-    setCartItems(items => items.filter(item => item.id !== id));
-  };
-
-  const removeFromWishlist = (id) => {
-    setWishlistItems(items => items.filter(item => item.id !== id));
-  };
-
-  const addToCart = (product) => {
-    const existingItem = cartItems.find(item => item.id === product.id);
-    if (existingItem) {
-      updateQuantity(product.id, existingItem.quantity + 1);
-    } else {
-      setCartItems([...cartItems, { ...product, quantity: 1 }]);
-    }
-    setIsWishlistOpen(false);
-  };
-
-  const totalCartValue = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+  }
 
   return (
     <>
@@ -158,21 +108,9 @@ export const Navbar = () => {
                 </div>
               </Link>
 
-              {/* Search Bar - Centro */}
+              {/* Search Bar */}
               <div className='flex-1 max-w-2xl mx-4'>
                 <form onSubmit={handleSearch} className='w-full flex gap-1'>
-                  <select 
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className='border border-gray-300 rounded-lg px-3 h-[45px] w-[130px] text-sm focus:outline-none focus:border-primary-blue bg-white'
-                  >
-                    <option value="">Categorias</option>
-                    <option value="iphone">iPhone</option>
-                    <option value="samsung">Samsung</option>
-                    <option value="xiaomi">Xiaomi</option>
-                    <option value="acessorios">Acessórios</option>
-                  </select>
-                  
                   <input 
                     type="text" 
                     value={searchTerm}
@@ -203,30 +141,19 @@ export const Navbar = () => {
                   </div>
                 </div>
                 
-                <button 
-                  onClick={() => setIsWishlistOpen(true)}
-                  className='flex items-center cursor-pointer gap-1 relative hover:text-primary-blue transition-colors'
-                >
-                  <Heart size={22} />
-                  <span className='text-sm hidden lg:inline'>Favoritos</span>
-                  {wishlistItems.length > 0 && (
-                    <span className='absolute -top-2 -right-2 w-5 h-5 bg-primary-blue rounded-full text-white text-xs flex items-center justify-center'>
-                      {wishlistItems.length}
-                    </span>
-                  )}
-                </button>
 
                 <button 
                   onClick={() => setIsCartOpen(true)}
-                  className='flex items-center cursor-pointer gap-1 relative hover:text-primary-blue transition-colors'
+                  className='flex items-center cursor-pointer gap-1 relative hover:text-primary-blue transition-colors
+                  '
                 >
                   <ShoppingCart size={22} />
                   <span className='text-sm hidden lg:inline'>Carrinho</span>
-                  {cartItems.length > 0 && (
-                    <span className='absolute -top-2 -right-2 w-5 h-5 bg-primary-blue rounded-full text-white text-xs flex items-center justify-center'>
-                      {cartItems.length}
-                    </span>
-                  )}
+                  <div className='w-[15px] h-[15px] rounded-full bg-primary-blue absolute
+                  -top-2 right-0 flex items-center justify-center
+                  '>
+                    <span className='text-xs text-white font-bold'>{cartProducts?.length}</span>
+                  </div>
                 </button>
               </div>
             </div>
@@ -262,11 +189,6 @@ export const Navbar = () => {
                   className='p-2 hover:bg-gray-100 rounded-lg relative'
                 >
                   <Heart size={22} />
-                  {wishlistItems.length > 0 && (
-                    <span className='absolute -top-1 -right-1 w-4 h-4 bg-primary-blue rounded-full text-white text-[10px] flex items-center justify-center'>
-                      {wishlistItems.length}
-                    </span>
-                  )}
                 </button>
 
                 <button 
@@ -274,11 +196,6 @@ export const Navbar = () => {
                   className='p-2 hover:bg-gray-100 rounded-lg relative'
                 >
                   <ShoppingCart size={22} />
-                  {cartItems.length > 0 && (
-                    <span className='absolute -top-1 -right-1 w-4 h-4 bg-primary-blue rounded-full text-white text-[10px] flex items-center justify-center'>
-                      {cartItems.length}
-                    </span>
-                  )}
                 </button>
               </div>
             </div>
@@ -328,170 +245,145 @@ export const Navbar = () => {
               </div>
             )}
 
-            {/* Modal do Carrinho */}
-            {isCartOpen && (
-              <>
-                <div className="fixed inset-0 bg-black/50 z-50" onClick={() => setIsCartOpen(false)} />
-                <div className="fixed right-0 top-0 bottom-0 w-full max-w-[450px] bg-white z-50 shadow-xl flex flex-col">
-                  <div className="flex items-center justify-between p-4 border-b border-gray-200">
-                    <h2 className="text-xl font-semibold flex items-center gap-2">
-                      <ShoppingCart size={24} />
-                      Meu Carrinho
-                      <span className="text-sm text-gray-500">({cartItems.length} itens)</span>
-                    </h2>
-                    <button 
-                      onClick={() => setIsCartOpen(false)}
-                      className="p-2 hover:bg-gray-100 rounded-lg"
-                    >
-                      <X size={24} />
-                    </button>
-                  </div>
+            
+{/* Modal do Carrinho  */}
+{isCartOpen && (
+  <>
+    <div className="fixed inset-0 bg-black/50 z-50" onClick={() => setIsCartOpen(false)} />
+    <div className="fixed right-0 top-0 bottom-0 w-full max-w-[450px] bg-white z-50 shadow-xl flex flex-col">
+      <div className="flex items-center justify-between p-4 border-b border-gray-200">
+        <h2 className="text-xl font-semibold flex items-center gap-2">
+          <ShoppingCart size={24} />
+          Meu Carrinho
+          <span className="text-sm text-gray-500">
+            ({cart?.cart?.length || 0} {cart?.cart?.length === 1 ? 'item' : 'itens'})
+          </span>
+        </h2>
+        <button 
+          onClick={() => setIsCartOpen(false)}
+          className="p-2 hover:bg-gray-100 rounded-lg"
+        >
+          <X size={24} />
+        </button>
+      </div>
 
-                  <div className="flex-1 overflow-y-auto p-4">
-                    {cartItems.length === 0 ? (
-                      <div className="text-center py-12">
-                        <ShoppingBag size={64} className="mx-auto text-gray-300 mb-4" />
-                        <p className="text-gray-500">Seu carrinho está vazio</p>
-                        <button 
-                          onClick={() => setIsCartOpen(false)}
-                          className="mt-4 px-6 py-2 bg-primary-blue text-white rounded-lg hover:bg-blue-600"
-                        >
-                          Continuar Comprando
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="space-y-4">
-                        {cartItems.map((item) => (
-                          <div key={item.id} className="flex gap-3 p-3 border border-gray-100 rounded-lg">
-                            <div className="w-[80px] h-[80px] bg-gray-50 rounded-lg flex items-center justify-center">
-                              <img src={item.image} alt={item.name} className="max-w-full max-h-full object-contain" />
-                            </div>
-                            <div className="flex-1">
-                              <h3 className="font-semibold text-gray-800">{item.name}</h3>
-                              <p className="text-primary-blue font-bold">{formatNumber(item.price)} {item.currency}</p>
-                              <div className="flex items-center gap-2 mt-2">
-                                <button 
-                                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                  className="p-1 border rounded hover:bg-gray-100"
-                                >
-                                  <Minus size={14} />
-                                </button>
-                                <span className="w-8 text-center">{item.quantity}</span>
-                                <button 
-                                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                  className="p-1 border rounded hover:bg-gray-100"
-                                >
-                                  <Plus size={14} />
-                                </button>
-                                <button 
-                                  onClick={() => removeFromCart(item.id)}
-                                  className="ml-auto text-red-500 hover:text-red-700"
-                                >
-                                  <Trash2 size={16} />
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+      <div className="flex-1 overflow-y-auto p-4">
+        {!cart?.cart || cart?.cart?.length === 0 ? (
+          <div className="text-center py-12">
+            <ShoppingBag size={64} className="mx-auto text-gray-300 mb-4" />
+            <p className="text-gray-500">Seu carrinho está vazio</p>
+            <button 
+              onClick={() => setIsCartOpen(false)}
+              className="mt-4 px-6 py-2 bg-primary-blue text-white rounded-lg hover:bg-blue-600"
+            >
+              Continuar Comprando
+            </button>
+          </div>
+        ) : (
+          <>
+            {/* Card carrinho */}
+            {cart.cart.map((item, index) => (
+              
+              <div key={index} className='flex items-center gap-2 mb-3 w-full p-3 border border-gray-200 rounded-lg'>
+                <div className='w-[20%] flex items-center justify-center h-full'>
+                  <img 
+                    src={item?.product?.image?.url} 
+                    className='w-full h-full object-contain bg-gray-50 rounded'
+                    alt={item?.product?.name}
+                  />
+                </div>
 
-                  {cartItems.length > 0 && (
-                    <div className="border-t border-gray-200 p-4">
-                      <div className="flex justify-between mb-4">
-                        <span className="font-semibold">Total:</span>
-                        <span className="text-xl font-bold text-primary-blue">
-                          {formatNumber(totalCartValue)} MZN
-                        </span>
-                      </div>
-                      <button className="w-full py-3 bg-primary-blue text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center gap-2">
-                        Finalizar Compra
-                        <ArrowRight size={18} />
-                      </button>
+                <div className='w-[80%] h-full flex flex-col'>
+                  <div className='flex justify-between items-start'>
+                    <div className='flex-1'>
+                      <h2 className='text-base font-semibold line-clamp-2'>{item?.product?.name}</h2>
+                      <p className='text-primary-blue font-bold mt-1'>
+                        {formatNumber(item?.product?.price)} <span className='text-sm'>MT</span>
+                      </p>
+                      <p className='text-xs text-gray-500 mt-1'>
+                        Quantidade: {item?.quantity}
+                      </p>
+                      <p className='text-sm font-semibold mt-1'>
+                        Subtotal: {formatNumber(item?.subtotal)} <span className='text-xs'>MT</span>
+                      </p>
                     </div>
-                  )}
-                </div>
-              </>
-            )}
 
-            {/* Modal de Favoritos */}
-            {isWishlistOpen && (
-              <>
-                <div className="fixed inset-0 bg-black/50 z-50" onClick={() => setIsWishlistOpen(false)} />
-                <div className="fixed right-0 top-0 bottom-0 w-full max-w-[450px] bg-white z-50 shadow-xl flex flex-col">
-                  <div className="flex items-center justify-between p-4 border-b border-gray-200">
-                    <h2 className="text-xl font-semibold flex items-center gap-2">
-                      <Heart size={24} />
-                      Meus Favoritos
-                      <span className="text-sm text-gray-500">({wishlistItems.length} itens)</span>
-                    </h2>
-                    <button 
-                      onClick={() => setIsWishlistOpen(false)}
-                      className="p-2 hover:bg-gray-100 rounded-lg"
-                    >
-                      <X size={24} />
-                    </button>
-                  </div>
+                    <div className='flex flex-col items-end gap-2'>
+                      <form onSubmit={handleSubmit} className='flex flex-col items-end gap-2'>
+                        <div className='flex items-center gap-2'>
+                          <div className='flex items-center gap-2'>
 
-                  <div className="flex-1 overflow-y-auto p-4">
-                    {wishlistItems.length === 0 ? (
-                      <div className="text-center py-12">
-                        <Heart size={64} className="mx-auto text-gray-300 mb-4" />
-                        <p className="text-gray-500">Sua lista de favoritos está vazia</p>
-                        <button 
-                          onClick={() => setIsWishlistOpen(false)}
-                          className="mt-4 px-6 py-2 bg-primary-blue text-white rounded-lg hover:bg-blue-600"
-                        >
-                          Explorar Produtos
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="space-y-4">
-                        {wishlistItems.map((item) => (
-                          <div key={item.id} className="flex gap-3 p-3 border border-gray-100 rounded-lg">
-                            <div className="w-[80px] h-[80px] bg-gray-50 rounded-lg flex items-center justify-center">
-                              <img src={item.image} alt={item.name} className="max-w-full max-h-full object-contain" />
-                            </div>
-                            <div className="flex-1">
-                              <h3 className="font-semibold text-gray-800">{item.name}</h3>
-                              <div className="flex items-baseline gap-2">
-                                <span className="text-primary-blue font-bold">{formatNumber(item.price)} {item.currency}</span>
-                                {item.oldPrice && (
-                                  <span className="text-xs text-gray-400 line-through">
-                                    {formatNumber(item.oldPrice)} {item.currency}
-                                  </span>
-                                )}
-                              </div>
-                              {item.discount && (
-                                <span className="text-xs text-green-600">-{item.discount}%</span>
-                              )}
-                              <div className="flex gap-2 mt-2">
-                                <button 
-                                  onClick={() => {
-                                    addToCart(item);
-                                    removeFromWishlist(item.id);
-                                  }}
-                                  className="flex-1 px-3 py-1.5 bg-primary-blue text-white text-sm rounded-lg hover:bg-blue-600"
-                                >
-                                  Adicionar ao Carrinho
-                                </button>
-                                <button 
-                                  onClick={() => removeFromWishlist(item.id)}
-                                  className="px-3 py-1.5 border border-red-500 text-red-500 text-sm rounded-lg hover:bg-red-50"
-                                >
-                                  Remover
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                          {/* Decrementar */}
+                          <button
+                            type='button'
+                            onClick={() => updateCart(item?.product?._id, -1)}
+                            className='w-[35px] h-[35px] bg-gray-200 rounded-md flex items-center justify-center'
+                          >
+                            <Minus size={16}/>
+                          </button>
+
+                          {/* Quantidade */}
+                          <span className='font-semibold min-w-[20px] text-center'>
+                            {item?.quantity}
+                          </span>
+
+                          {/* Incrementar */}
+                          <button
+                            type='button'
+                            onClick={() => updateCart(item?.product?._id, 1)}
+                            className='w-[35px] h-[35px] bg-primary-blue text-white rounded-md flex items-center justify-center'
+                          >
+                            <Plus size={16}/>
+                          </button>
+
+                        </div>
+                          <button 
+                            type="button"
+                            className='flex items-center justify-center w-[35px] rounded-md h-[35px] bg-red-500 hover:bg-red-600 transition duration-300'
+                            onClick={() => {
+                               removeCart(item?.product._id)
+                            }}
+                          >
+                            <Trash className='text-white size-4'/>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
                   </div>
                 </div>
-              </>
-            )}
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+      
+      {/* Total Card */}
+      {cart?.cart && cart?.cart?.length > 0 && (
+        <>
+          <div className='border-t border-gray-200 p-4'>
+            <div className='flex items-center justify-between pt-3 border-t border-gray-200'>
+              <p className='text-lg font-bold'>Total:</p>
+              <h1 className='text-2xl font-bold text-primary-blue'>{formatNumber(cart?.total || 0)} <span className='text-sm'>MT</span></h1>
+            </div>
+          </div>
+          
+          <div className='p-4 border-t border-gray-200'>
+            <button className='w-full py-3 bg-primary-blue text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors'>
+              Finalizar Compra
+            </button>
+            <button 
+              onClick={() => setIsCartOpen(false)}
+              className='w-full mt-2 py-2 text-gray-600 hover:text-primary-blue transition-colors text-sm'
+            >
+              Continuar Comprando
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  </>
+)}
+
 
             {/* Menu Mobile - Lateral */}
             <div className={`fixed top-0 left-0 bottom-0 w-[280px] bg-white z-50 shadow-xl transform transition-transform duration-300 ease-in-out ${

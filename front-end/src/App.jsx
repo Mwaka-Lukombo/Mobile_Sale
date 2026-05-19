@@ -19,6 +19,11 @@ import { SmartphonesPage } from './pages/home/SmartphonesPage'
 import { AcessoriosPage } from './pages/home/AcessoriosPage'
 import { TabletPage } from './pages/home/TabletPage'
 import { ContactoPage } from './pages/home/ContactoPage'
+import { ProductSinglePage } from './pages/products/ProductSinglePage'
+import { AcessoriosPainelPage } from './pages/Acessorios/AcessoriosPainelPage'
+import { TabletPagePainel } from './pages/Tablet/TabletPagePainel'
+import { AcessoriosSinglePage } from './pages/home/AcessoriosSinglePage'
+import { TabletSinglePage } from './pages/Tablet/TabletSinglePage'
 
 
 //Components
@@ -110,15 +115,46 @@ if(isChecking){
           </PrivateRoute>
          } />
 
+         <Route path='/smartphones/:id' element={ 
+          <PrivateRoute>
+            <ProductSinglePage /> 
+          </PrivateRoute>
+         } />
+
          <Route path='/acessorios' element={ 
           <PrivateRoute>
             <AcessoriosPage /> 
           </PrivateRoute>
          } />
 
+         <Route path='/acessorios/:id' element={ 
+          <PrivateRoute>
+            <AcessoriosSinglePage /> 
+          </PrivateRoute>
+         } />
+
+         <Route path='/createAcessorios' element={ 
+          <PrivateRoute>
+            <AcessoriosPainelPage /> 
+          </PrivateRoute>
+         } />
+
+         <Route path='/createTablet' element={ 
+          <PrivateRoute>
+            <TabletPagePainel /> 
+          </PrivateRoute>
+         } />
+
           <Route path='/tablets' element={ 
           <PrivateRoute>
             <TabletPage /> 
+          </PrivateRoute>
+         } />
+
+         
+          <Route path='/tablets/:id' element={ 
+          <PrivateRoute>
+            <TabletSinglePage /> 
           </PrivateRoute>
          } />
 

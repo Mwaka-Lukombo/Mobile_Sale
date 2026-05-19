@@ -81,5 +81,8 @@ getCategories:async()=>{
 }));
 
 
+export const useAcessoriesStore = create((set, get) => ({
+
+}));
 
 
