@@ -27,7 +27,6 @@ app.use(cors({origin:"http://localhost:3000",credentials:true}));
 //Rotes
 app.use(Routes);
 
-//E voltamos a colocar o cross-env para rodar em nossa aplicacao
 if(process.env.NODE_ENV === "production"){
 
     app.use(express.static(path.join(__dirname,"front-end","dist")));
