@@ -24,6 +24,7 @@ import { AcessoriosPainelPage } from './pages/Acessorios/AcessoriosPainelPage'
 import { TabletPagePainel } from './pages/Tablet/TabletPagePainel'
 import { AcessoriosSinglePage } from './pages/home/AcessoriosSinglePage'
 import { TabletSinglePage } from './pages/Tablet/TabletSinglePage'
+import { ProfilePage } from './pages/Profile/ProfilePage'
 
 
 //Components
@@ -161,6 +162,12 @@ if(isChecking){
          <Route path='/contacto' element={ 
           <PrivateRoute>
             <ContactoPage /> 
+          </PrivateRoute>
+         } />
+
+        <Route path='/profile' element={ 
+          <PrivateRoute>
+            <ProfilePage /> 
           </PrivateRoute>
          } />
 

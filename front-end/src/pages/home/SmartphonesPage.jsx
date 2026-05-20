@@ -16,6 +16,7 @@ import {
 
 import { formatNumber } from '../../lib/formatNumbers'
 import { useProductHome } from '../../store/productHome'
+import { Container } from '../../components/common/Container'
 
 export const SmartphonesPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("todos")
@@ -23,6 +24,8 @@ export const SmartphonesPage = () => {
 
    const location = useLocation();
 
+
+    const url = location?.pathname;
 
    const {
      products,
@@ -75,7 +78,7 @@ export const SmartphonesPage = () => {
       {/* Header com Banner e Breadcrumb */}
       <div className="bg-gradient-to-r from-primary-blue to-secondary-blue text-white">
         {/* Menu de Navegação Desktop */}
-        <div className="border-b border-white/20">
+        <div className="border-b border-white/20 ">
           <div className="max-w-7xl mx-auto px-4">
             <nav className="hidden md:flex items-center justify-between">
               <div className="flex items-center space-x-8">
@@ -83,10 +86,10 @@ export const SmartphonesPage = () => {
                   <Link
                     key={item.path}
                     to={item.path}
-                    className={`flex items-center gap-2 px-3 py-4 text-sm font-medium ${location === item?.location && "border-b-2 border-orange-400"}  hover:text-blue-200 transition-colors hover:border-b-2 border-transparent hover:border-blue-200`}
+                    className={`flex items-center gap-2 px-3 py-4 text-sm font-medium ${url === item?.location && "border-b-2 border-transparent border-white"}  hover:text-blue-200 transition-colors hover:border-b-2 border-transparent hover:border-blue-200`}
                   >
-                    <item.icon size={18} />
-                    <span>{item.label}</span>
+                    <item.icon size={17} />
+                    <span className='text-xs'>{item.label}</span>
                   </Link>
                 ))}
               </div>
@@ -103,7 +106,7 @@ export const SmartphonesPage = () => {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="p-2 hover:bg-white/10 rounded-lg transition-colors"
           >
-            <Menu size={24} />
+            <Menu size={20} />
           </button>
         </div>
 
@@ -115,10 +118,10 @@ export const SmartphonesPage = () => {
                 key={item.path}
                 to={item.path}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center gap-3 px-6 py-4 text-sm font-medium hover:bg-white/10 transition-colors border-b border-white/10"
+                className={`flex items-center gap-3 px-6 py-4 text-sm font-medium ${url === item?.location && "bg-white/50"} hover:bg-white/10 transition-colors border-b border-white/10`}
               >
                 <item.icon size={18} />
-                <span>{item.label}</span>
+                <span className='text-xs'>{item.label}</span>
               </Link>
             ))}
           </div>
@@ -126,14 +129,14 @@ export const SmartphonesPage = () => {
 
         {/* Breadcrumb e Título */}
         <div className="py-8 px-4">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-7xl mx-auto p-1">
             {/* Título e Descrição */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2">
+                <h1 className="text-3xl font-bold mb-2 leading-normal">
                   Smartphones
                 </h1>
-                <p className="text-base md:text-lg opacity-90">
+                <p className="text-xs font-semibold  opacity-90">
                   Descubra os melhores smartphones do mercado com os preços mais competitivos
                 </p>
               </div>
@@ -142,7 +145,8 @@ export const SmartphonesPage = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <Container>
+        <div className="px-4 py-8">
         
         {/* Breadcrumb Mobile Alternativo */}
         <div className="md:hidden flex items-center gap-2 text-sm text-gray-500 mb-4 pb-2 border-b border-gray-200">
@@ -178,7 +182,7 @@ export const SmartphonesPage = () => {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 text-xs ${
                     selectedCategory === category
                       ? "bg-primary-blue text-white shadow-lg"
                       : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
@@ -191,7 +195,7 @@ export const SmartphonesPage = () => {
           </div>
 
           {/* Contador de produtos */}
-          <div className="text-gray-600 text-sm">
+          <div className="text-gray-600 text-xs">
             <span className="font-semibold">{filteredProducts.length}</span> produtos encontrados
           </div>
         </div>
@@ -201,7 +205,9 @@ export const SmartphonesPage = () => {
           {filteredProducts.map((product) => (
             <div
               key={product._id}
-              className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group"
+              className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group
+              border
+              "
             >
               {/* Imagem do Produto */}
               <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 p-6 h-64 flex items-center justify-center">
@@ -227,21 +233,21 @@ export const SmartphonesPage = () => {
                   {product?.category}
                 </div>
 
-                <h3 className="font-semibold text-gray-800 text-lg mb-2 line-clamp-2 min-h-[56px]">
+                <h3 className="font-semibold text-gray-800 text-md mb-2 line-clamp-2 min-h-[30px]">
                   {product?.name}
                 </h3>
 
                 <div className="flex flex-wrap gap-1 mb-3">
                   {product?.informations?.map((info, idx) => (
                     <React.Fragment key={idx}>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                      <span className="text-xs capitalize bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
                         Gigas {info.gigas}
                       </span>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                        RAM {info.ram}
+                      <span className="text-xs capitalize bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                        Ram {info.ram}
                       </span>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                        CAMERA {info.camera} MP
+                      <span className="text-xs capitalize bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                        Camera {info.camera} MP
                       </span>
                     </React.Fragment>
                   ))}
@@ -261,11 +267,11 @@ export const SmartphonesPage = () => {
                       />
                     ))}
                   </div>
-                  <span className="text-xs text-gray-500">({product.reviews || 0})</span>
+                  <span className="text-xs text-gray-500">({product?.stock || 0})</span>
                 </div>
 
                 <div className="flex items-baseline gap-2 mb-4">
-                  <span className="text-2xl font-bold text-primary-blue">
+                  <span className="text-sm font-bold text-primary-blue">
                     {formatNumber(product.price)} <b>MZN</b>
                   </span>
                 </div>
@@ -274,7 +280,7 @@ export const SmartphonesPage = () => {
                   <button
                     onClick={() => addToCart(product)}
                     disabled={product.stock === 0}
-                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-medium transition-all duration-300 ${
+                    className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl font-medium transition-all duration-300 text-xs  ${
                       product.stock
                         ? "bg-primary-blue text-white hover:bg-secondary-blue active:scale-95"
                         : "bg-gray-200 text-gray-400 cursor-not-allowed"
@@ -316,6 +322,7 @@ export const SmartphonesPage = () => {
           </div>
         )}
       </div>
+      </Container>
     </div>
   )
 }

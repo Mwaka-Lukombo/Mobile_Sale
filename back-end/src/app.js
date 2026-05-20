@@ -5,12 +5,9 @@ import { config } from 'dotenv';
 import dns from 'dns';
 import Routes from './routes/routes.js';
 import cors from 'cors';
-import path from 'path';
 
 
-let __dirname = path.resolve();
-
-dns.setServers(['8.8.8.8', '1.1.1.1']);
+dns.setServers(['8.8.8.8'], ['1.1.1.1']);
 
 
 config();
@@ -21,21 +18,11 @@ const app = express();
 
 app.use(express.json({limit:"5mb"}));
 app.use(cookieParser());
-app.use(cors({origin:"https://mobile-sale.onrender.com",credentials:true}));
+app.use(cors({origin:"http://localhost:3000",credentials:true}));
 
 
 //Rotes
 app.use(Routes);
-
-if(process.env.NODE_ENV === "production"){
-
-    app.use(express.static(path.join(__dirname,"front-end","dist")));
-
-    app.use(/.*/,(req,res)=>{
-        res.sendFile(path.join(__dirname,"front-end","dist","index.html"));
-    })
-}
-
 
 
 dbConnect().then(()=>{
