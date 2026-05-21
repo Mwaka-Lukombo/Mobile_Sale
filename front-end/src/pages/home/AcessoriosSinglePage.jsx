@@ -36,7 +36,7 @@ export const AcessoriosSinglePage = () => {
   },[getProductSingle]);
 
   const handleAddToCart = async() => {
-    let type = "Acessorios";
+    let type = "Acessorio";
     await addCart(productId,type,quantity);
   };
 

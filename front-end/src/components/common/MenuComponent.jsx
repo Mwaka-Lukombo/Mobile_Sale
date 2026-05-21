@@ -12,15 +12,15 @@ export const MenuComponent = () => {
   
   return (
     
-      <div className='sticky top-0 left-0 z-30 w-full h-[80px] bg-cinza-claro border border-[#ccc] flex items-center justify-end px-7'>
+      <div className='sticky top-0 left-0 z-30 w-full h-[60px] bg-cinza-claro border border-[#ccc] flex items-center justify-end px-7'>
         
         {isAdmin && (
           <div className='flex items-center gap-3'>
-          <div className='w-[60px] h-[60px] bg-cinza-claro shadow border border-[#ccc] rounded-full flex items-center justify-center'>
-             <User />
+          <div className='w-[35px] h-[35px] bg-cinza-claro shadow border border-[#ccc] rounded-full flex items-center justify-center'>
+             <User size={15}/>
           </div>
           <div>
-            <span className='font-semibold'>Admin</span>
+            <span className='text-xs font-semibold'>Admin</span>
           </div>
         </div>
         )}

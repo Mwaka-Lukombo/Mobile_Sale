@@ -65,7 +65,6 @@ export const ProductPage = () => {
     "Action",
   ];
 
-  console.log(`Total pages: ${totalPages}`, `Current Page: ${currentPage}`);
 
   const resetForm = () => {
     // Resetar todos os campos do formulário
@@ -163,6 +162,8 @@ export const ProductPage = () => {
     e.preventDefault();
   }
 
+  console.log(dataForm)
+
   return (
     <div className="w-full min-h-screen bg-gray-50">
 
@@ -176,7 +177,7 @@ export const ProductPage = () => {
         <div className="mb-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+            <h1 className="text-2xl font-bold text-gray-800">
               Products
             </h1>
 
@@ -194,15 +195,15 @@ export const ProductPage = () => {
                     type="text"
                     placeholder="Search product for name"
                     onChange={(e) => getProducts(e.target.value, "")}
-                    className="w-full sm:w-80 h-12 pl-11 pr-4 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                    className="w-full sm:w-80 h-10 pl-11 pr-4 rounded-xl border text-sm border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
                   />
                 </div>
               </form>
 
               {/* BUTTON */}
-              <button onClick={() => setShowModal((prev) => !prev)} className="flex items-center justify-center gap-2 h-12 px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors shadow-sm">
-                <Plus size={20} />
-                <span>Create Product</span>
+              <button onClick={() => setShowModal((prev) => !prev)} className="flex items-center justify-center gap-2 h-10 px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors shadow-sm">
+                <Plus size={17} />
+                <span className="text-sm">Create Product</span>
               </button>
             </div>
           </div>
@@ -220,7 +221,7 @@ export const ProductPage = () => {
                   {subTitleForm.map((item, index) => (
                     <th
                       key={index}
-                      className="px-6 py-4 text-left text-sm font-semibold text-gray-600"
+                      className="px-6 py-4 text-left text-sm font-semibold text-gray-600 "
                     >
                       {item}
                     </th>
@@ -236,7 +237,7 @@ export const ProductPage = () => {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
 
-                        <div className="w-12 h-12 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
+                        <div className="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
                           <img
                             src={item?.image?.url}
                             alt="Iphone 12"
@@ -244,7 +245,7 @@ export const ProductPage = () => {
                           />
                         </div>
 
-                        <span className="font-medium text-gray-800">
+                        <span className="font-bold text-gray-800 text-xs">
                           {item?.name}
                         </span>
 
@@ -252,28 +253,28 @@ export const ProductPage = () => {
                     </td>
 
                     {/* CATEGORY */}
-                    <td className="px-6 py-4 text-gray-600">
+                    <td className="text-xs font-semibold  px-6 py-4 text-gray-600">
                       {item?.category}
                     </td>
 
                     {/* PRICE */}
                     <td className="px-6 py-4">
-                      <span className="font-semibold text-gray-800">
-                        {item?.price} <b className="text-sm">MZN</b>
+                      <span className="text-xs font-semibold text-gray-800">
+                        {item?.price} <span className="font-medium">MZN</span>
                       </span>
                     </td>
 
                     {/* STOCK */}
                     <td className="px-6 py-4">
-                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${item?.stock < 5 ? "bg-red-500" : "bg-green-300"} text-color-black`}>
+                      <span className={`inline-flex items-center justify-center w-[20px] h-[20px] rounded-full text-xs font-medium ${item?.stock < 5 ? "bg-red-500" : "bg-green-300"} text-color-black`}>
                         {item?.stock}
                       </span>
                     </td>
 
                     {/* SALES */}
                     <td className="px-6 py-4">
-                      <span className="text-sm font-medium text-gray-700">
-                        {item?.sales ?? "No sales"}
+                      <span className="text-xs font-medium text-gray-700">
+                        {item?.orders ?? 0}
                       </span>
                     </td>
 
@@ -282,11 +283,11 @@ export const ProductPage = () => {
                       <div className="flex items-center gap-3">
 
                         <button onClick={() => updateItems(item)} className="text-blue-600 hover:text-blue-800 transition-colors">
-                          <Pencil size={18} />
+                          <Pencil size={12} />
                         </button>
 
                         <button onClick={() => deleteProduct(item?._id)} className="text-red-600 hover:text-red-800 transition-colors">
-                          <Trash size={18} />
+                          <Trash size={12} />
                         </button>
 
                       </div>
@@ -307,7 +308,7 @@ export const ProductPage = () => {
 
                   <div className="flex items-center gap-3 flex-1">
 
-                    <div key={index} className="w-12 h-12 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
+                    <div key={index} className="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
                       <img
                         src={item?.image?.url}
                         alt={item?.image.url}
@@ -316,11 +317,11 @@ export const ProductPage = () => {
                     </div>
 
                     <div>
-                      <h3 className="font-semibold text-gray-800">
+                      <h3 className="text-xs font-bold text-gray-800">
                         {item?.name}
                       </h3>
 
-                      <p className="text-sm text-gray-500">
+                      <p className="text-xs font-semibold text-gray-500">
                         {item?.category}
                       </p>
                     </div>
@@ -329,11 +330,11 @@ export const ProductPage = () => {
                   <div className="flex gap-2">
 
                     <button onClick={() => updateItems(item)} className="text-blue-600 p-1">
-                      <Pencil size={16} />
+                      <Pencil size={12} />
                     </button>
 
                     <button onClick={() => deleteProduct(item?._id)} className="text-red-600 p-1">
-                      <Trash size={16} />
+                      <Trash size={12} />
                     </button>
 
                   </div>
@@ -342,25 +343,25 @@ export const ProductPage = () => {
                 <div className="grid grid-cols-2 gap-3 text-sm">
 
                   <div>
-                    <span className="text-gray-500">Preço:</span>
+                    <span className="text-xs text-gray-500">Preço:</span>
 
-                    <p className="font-semibold text-gray-800">
-                      {item?.price} <b>MZN</b>
+                    <p className="text-xs font-semibold text-gray-800">
+                      {item?.price} MZN
                     </p>
                   </div>
 
                   <div>
-                    <span className="text-gray-500">Estoque:</span>
+                    <span className="text-xs text-gray-500">Estoque:</span>
 
-                    <p className="font-semibold text-green-600">
+                    <p className="text-xs font-semibold text-green-600">
                       {item?.stock}
                     </p>
                   </div>
 
                   <div className="col-span-2">
-                    <span className="text-gray-500">Sales:</span>
+                    <span className="text-xs text-gray-500">Sales:</span>
 
-                    <p>{item?.sales ?? "No sales"}</p>
+                    <p className="text-xs">{item?.orders ?? 0}</p>
                   </div>
 
                 </div>
@@ -384,7 +385,7 @@ export const ProductPage = () => {
         </div>
 
         {/* Pagination */}
-        <div className="w-full h-[50px]  my-5 flex items-center justify-center gap-1">
+        <div className="w-full h-[50px]  my-5 flex items-center justify-center">
           {[...Array(totalPages)].map((_, index) => {
             const currentPageIndex = index + 1;
 
@@ -392,7 +393,9 @@ export const ProductPage = () => {
               <div className="join" key={index}>
                 <button
                   onClick={() => getProducts(_, currentPageIndex)}
-                  className={`join-item btn ${currentPage === currentPageIndex ? "btn-active bg-secondary-blue text-white" : "bg-cinza-claro shadow-xl border "}  w-[55px] h-[50px] text-color-black`}
+                  className={`join-item btn ${currentPage === currentPageIndex ? "btn-active bg-secondary-blue text-white" : "border  "}  w-[40px] h-[40px] text-color-black
+                   text-xs
+                  `}
                 >{index + 1}</button>
               </div>
             )

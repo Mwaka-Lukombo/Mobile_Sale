@@ -261,6 +261,56 @@ export const profile = async(req,res)=>{
 }
 
 
+export const updateProfile = async(req,res)=>{
+
+  try {
+    const {_id} = req?.user;
+    const {
+      password,
+      profile
+    } = req.body;
+    
+    const user = await User.findById(_id);
+
+    if(!user){
+      return res.status(404).json({message:"User not found!"});
+    }
+    let imageProfile = {};
+
+        if(profile){
+          imageProfile = await uploadFile(
+              profile,
+              user?.profile?.public_id
+          );
+
+          user.profile = imageProfile;
+        }
+
+
+    user.profile = imageProfile;
+    
+    //cryption
+    const genSalt = await bcrypt.genSalt(12);
+     const passwordHash = await bcrypt.hash(password,genSalt);
+
+    if(password && password !== ''){
+       user.password = passwordHash;
+      }
+    await user.save();
+
+
+    res.status(200).json({
+      user,
+      message:"Updated successfuly!"
+    })
+
+  } catch (error) {
+    console.log(error?.message);
+    res.status(500).json({message:"Internal Server Error"});
+  }
+}
+
+
 export const check = async(req,res)=>{
     try {
         const user = req.user;

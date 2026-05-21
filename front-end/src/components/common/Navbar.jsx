@@ -18,6 +18,7 @@ import {
 import { useAuthStore } from '../../store/authStore';
 import { useProductHome } from '../../store/productHome';
 import { formatNumber } from '../../lib/formatNumbers';
+import { useOrderStore } from '../../store/orderStore';
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,6 +37,11 @@ export const Navbar = () => {
     updateCart,
     removeCart
   } = useProductHome();
+
+  const {
+   isLoading,
+   payment
+  } = useOrderStore();
 
   useEffect(()=>{
     getCart()
@@ -349,7 +355,10 @@ export const Navbar = () => {
                       </div>
                       
                       <div className='p-4 border-t border-gray-200'>
-                        <button className='w-full py-2 bg-primary-blue text-sm text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors'>
+                        <button 
+                        onClick={()=> payment()}
+                        disabled={isLoading} 
+                        className='w-full py-2 bg-primary-blue text-sm text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors'>
                           Finalizar Compra
                         </button>
                         <button 

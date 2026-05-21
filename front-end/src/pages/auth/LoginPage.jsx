@@ -183,7 +183,7 @@
                 
                 {/* Samsung S10 - tamanho ajustado */}
                 <motion.div 
-                  className='rotate-12 relative -top-10 w-[150px] h-[200px] md:w-[180px] md:h-[330px] rounded-2xl'
+                  className='rotate-12 relative -top-7 md:-top-12 w-[150px] h-[280px] md:w-[180px] md:h-[330px] rounded-2xl'
                   variants={mockupAnimations.elementsReveal}
                   initial="hidden"
                   animate="visible"
@@ -347,22 +347,22 @@
           
           <div className='text-center md:text-left mb-6'>
             <h1 className='text-xl md:text-2xl font-bold leading-normal text-gray-800'>Bem-vindo!</h1>
-            <p className='text-sm md:text-sm text-gray-500 mt-1'>Faça login na sua conta CellShop</p>
+            <p className='text-sm md:text-xs text-gray-500 mt-2'>Faça login na sua conta CellShop</p>
           </div>
 
           <form onSubmit={handleSubmit} className='space-y-5'>
             
             {/* E-mail */}
             <div className='form-control'>
-              <label className='text-sm font-medium text-gray-700 mb-1 block'>E-mail</label>
+              <label className='text-xs font-medium text-gray-700 mb-2 block '>E-mail</label>
               <div className='relative'>
-                <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={18} />
+                <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={17} />
                 <input 
                   type='email' 
                   placeholder='seu@email.com' 
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
-                  className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all
+                  className='w-full pl-10 h-[40px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all
                   bg-inherit
                   '
                 />
@@ -371,15 +371,15 @@
 
             {/* Senha com ícone de olho */}
             <div className='form-control'>
-              <label className='text-sm font-medium text-gray-700 mb-1 block'>Senha</label>
+              <label className='text-xs font-medium text-gray-700 mb-2 block'>Senha</label>
               <div className='relative'>
-                <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={18} />
+                <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={17} />
                 <input 
                   type={showPassword ? 'text' : 'password'} 
                   placeholder='*******' 
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
-                  className='w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all
+                  className='w-full pl-10 h-[40px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all
                   bg-inherit
                   '
                 />
@@ -389,14 +389,14 @@
                   onClick={() => setShowPassword(!showPassword)}
                   className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-500 transition-colors'
                 >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
                 </button>
               </div>
             </div>
 
             {/* Link Esqueceu a senha? */}
             <div className='text-right'>
-              <Link to={'/forgetPassword'} className='text-sm text-blue-500 hover:text-blue-600 hover:underline transition-colors'>
+              <Link to={'/forgetPassword'} className='text-xs text-blue-500 hover:text-blue-600 hover:underline transition-colors'>
                 Esqueceu a senha?
               </Link>
             </div>
@@ -406,29 +406,31 @@
               <p className='text-red-500'>{error}</p>
             </div>
 
+            <div>
             {/* Botão de Login */}
             <button
             disabled={isLoading} 
               type='submit'
-              className='w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-2.5 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg mt-2'
+              className='w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold h-[40px] text-sm rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg mt-2'
             >
               {!isLoading ? "Entrar" : <LoaderComponent size={7} />}
             </button>
 
             {/* Link para cadastro */}
-            <p className='text-center text-sm text-gray-600 mt-5'>
+            <p className='text-center text-xs text-gray-600 mt-5'>
               Não tem uma conta?{' '}
-              <Link to={'/signup'} className='text-blue-500 hover:text-blue-600 font-semibold hover:underline'>
+              <Link to={'/signup'} className='text-xs text-blue-500 hover:text-blue-600 font-semibold hover:underline'>
                 Cadastre-se gratuitamente
               </Link>
             </p>
+            </div>
 
             {/* Divisor */}
             <div className='relative my-6'>
               <div className='absolute inset-0 flex items-center'>
                 <div className='w-full border-t border-gray-200'></div>
               </div>
-              <div className='relative flex justify-center text-sm'>
+              <div className='relative flex justify-center text-xs'>
                 <span className='px-3 bg-white text-gray-400'>ou continue com</span>
               </div>
             </div>
@@ -436,8 +438,8 @@
             {/* Botões de redes sociais */}
             <div className='space-y-2'>
               <button className='w-full flex items-center justify-center gap-3 border border-gray-300 rounded-lg py-2 hover:bg-gray-50 transition-colors'>
-                <span className='text-lg'>&copy;</span>
-                <span className='text-sm text-gray-700'>Google</span>
+                <span className='text-xs'>&copy;</span>
+                <span className='text-xs text-gray-700'>Google</span>
               </button>
             </div>
           </form>

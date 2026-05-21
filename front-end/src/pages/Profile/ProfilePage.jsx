@@ -3,18 +3,27 @@ import { Link } from 'react-router-dom'
 import { User, Mail, Lock, Camera, ArrowLeft, Save, Home } from 'lucide-react'
 import { Container } from '../../components/common/Container'
 import { formatNumber } from '../../lib/formatNumbers'
+import { useAuthStore } from '../../store/authStore'
+import toast from 'react-hot-toast'
 
 export const ProfilePage = () => {
+  
+  const {
+   user,
+   update,
+   isLoading
+  } = useAuthStore();
+
   const [profileData, setProfileData] = useState({
-    name: 'João Silva',
-    email: 'joao@email.com',
+    name: user?.name || '',
+    email: user?.email || '',
     password: '',
     confirmPassword: ''
-  })
+  });
 
-  const [profileImage, setProfileImage] = useState('https://via.placeholder.com/150')
+  const [profileImage, setProfileImage] = useState(user?.profile?.url || '')
   const [isEditing, setIsEditing] = useState(false)
-  const [isSaving, setIsSaving] = useState(false)
+  const fileInputRef = React.useRef(null)
 
   // Compras feitas - dados estáticos
   const purchases = [
@@ -72,35 +81,72 @@ export const ProfilePage = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
-    setProfileData({
-      ...profileData,
+    setProfileData(prev => ({
+      ...prev,
       [name]: value
-    })
+    }))
   }
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        setProfileImage(reader.result)
-      }
-      reader.readAsDataURL(file)
+    const file = e.target.files?.[0]
+    
+    if (!file) return
+
+    const reader = new FileReader()
+    
+    reader.onload = () => {
+      const base64Image = reader.result
+      setProfileImage(base64Image)
     }
+    
+    reader.onerror = () => {
+      toast.error('Erro ao carregar a imagem')
+    }
+    
+    reader.readAsDataURL(file)
   }
 
   const handleSave = async () => {
-    setIsSaving(true)
-    // Simulando requisição
-    setTimeout(() => {
-      setIsSaving(false)
+    
+    if (profileData.password !== profileData.confirmPassword) {
+      toast.error('As senhas não coincidem')
+      return
+    }
+
+    const dataUpload = {
+      name: profileData.name,
+      email: profileData.email,
+      password: profileData.password || undefined,
+      profile: profileImage || undefined
+    }
+
+    try {
+      await update(dataUpload)
+      toast.success('Perfil atualizado com sucesso!')
       setIsEditing(false)
-    }, 1500)
+      setProfileData(prev => ({
+        ...prev,
+        password: '',
+        confirmPassword: ''
+      }))
+    } catch (error) {
+      toast.error('Erro ao atualizar perfil')
+    }
   }
 
   const handleCancel = () => {
     setIsEditing(false)
-    // Reset form se necessário
+    setProfileImage(user?.profile?.url || '')
+    setProfileData({
+      name: user?.name || '',
+      email: user?.email || '',
+      password: '',
+      confirmPassword: ''
+    })
+    
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
   }
 
   return (
@@ -147,7 +193,7 @@ export const ProfilePage = () => {
                   {/* Imagem de Perfil */}
                   <div className="relative">
                     <img 
-                      src={profileImage} 
+                      src={profileImage || user?.profile?.url || "/avatar.png"} 
                       alt="Perfil" 
                       className="w-32 h-32 rounded-full object-cover border-4 border-blue-100 shadow-lg"
                     />
@@ -156,6 +202,7 @@ export const ProfilePage = () => {
                       <label htmlFor="profileImageInput" className="absolute bottom-0 right-0 bg-primary-blue text-white p-2 rounded-full cursor-pointer hover:bg-blue-700 transition-colors shadow-lg">
                         <Camera size={18} />
                         <input 
+                          ref={fileInputRef}
                           id="profileImageInput"
                           type="file" 
                           accept="image/*" 
@@ -184,15 +231,16 @@ export const ProfilePage = () => {
                       <div className="space-y-2">
                         <button 
                           onClick={handleSave}
-                          disabled={isSaving}
-                          className="w-full py-2 px-4 bg-green-600 text-white rounded-xl font-medium text-sm hover:bg-green-700 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                          disabled={isLoading}
+                          className="w-full py-2 px-4 bg-green-600 text-white rounded-xl font-medium text-sm hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                         >
                           <Save size={16} />
-                          {isSaving ? 'Salvando...' : 'Salvar'}
+                          {isLoading ? 'Salvando...' : 'Salvar'}
                         </button>
                         <button 
                           onClick={handleCancel}
-                          className="w-full py-2 px-4 bg-gray-200 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-300 transition-colors"
+                          disabled={isLoading}
+                          className="w-full py-2 px-4 bg-gray-200 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           Cancelar
                         </button>
@@ -208,7 +256,7 @@ export const ProfilePage = () => {
               <div className="bg-white rounded-2xl shadow-lg p-6">
                 <h2 className="text-lg font-bold text-gray-800 mb-6">Informações Pessoais</h2>
 
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
                   
                   {/* Nome */}
                   <div>

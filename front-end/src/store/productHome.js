@@ -63,7 +63,6 @@ export const useProductHome = create((set,get) => ({
             set({cart:res.data})
         } catch (error) {
             console.log(error.response?.data?.message);
-            toast.error(error.response?.data?.message);
         }
     },
     updateCart:async(productId,quantity)=>{

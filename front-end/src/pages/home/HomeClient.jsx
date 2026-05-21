@@ -82,10 +82,10 @@ export const HomeClient = () => {
       
       <Container>
         {/* MENU DE NAVEGAÇÃO SUPERIOR */}
-      <div className='flex gap-3 mb-8 justify-center md:justify-start overflow-x-auto px-3'>
+      <div className='flex gap-3 mb-8 justify-center md:justify-start overflow-x-auto px-5'>
         <ul className='flex gap-7'>
           {navLinks.map((link) => (
-            <li key={link.id} className="flex items-center flex-col gap-2">
+            <li key={link.id} className="flex items-center flex-col gap-1">
               <Link
                 onClick={() => setPage(link.page)}
                 to={link?.href}

@@ -65,7 +65,7 @@ export const AcessoriosPage = () => {
   })
 
   const addToCart = async(product) => {
-    let type = "Acessorios";
+    let type = "Acessorio";
     await addCart(product?._id,type);
   }
 

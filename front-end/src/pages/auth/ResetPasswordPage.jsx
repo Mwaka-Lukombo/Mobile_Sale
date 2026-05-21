@@ -49,139 +49,135 @@ export const ResetPasswordPage = () => {
   return (
     <div className='w-full flex flex-col md:flex-row gap-3 min-h-screen bg-[#f7f7f7] py-8 px-[4%] md:py-12'>
       
-      {/* left-side - formulário de reset senha */}
-      <motion.div 
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className='w-full md:w-[40%] shadow-xl border border-[#ccc] rounded-xl p-4 md:p-6 bg-white h-auto order-2 md:order-1'
-      >
+      {/* left-side - formulário de reset senha - Tamanhos ajustados */}
+      <div className='w-full md:w-[40%] shadow-xl border border-[#ccc] rounded-xl p-4 md:p-6 bg-white h-auto order-2 md:order-1'>
+        
         {/* Botão voltar */}
-        <Link to={'/login'} href='#' className='inline-flex items-center gap-2 text-blue-500 hover:text-blue-600 transition-colors mb-6'>
-          <ArrowLeft size={18} />
-          <span className='text-sm font-medium'>Voltar para o login</span>
+        <Link to={'/login'} className='inline-flex items-center gap-2 text-blue-500 hover:text-blue-600 transition-colors mb-6'>
+          <ArrowLeft size={16} />
+          <span className='text-xs font-medium'>Voltar para o login</span>
         </Link>
 
         <div className='mb-6'>
-          <motion.div 
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.3, delay: 0.3 }}
-            className='w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mx-auto md:mx-0 mb-4'
-          >
-            <Key size={28} className='text-blue-500' />
-          </motion.div>
-          <h1 className='text-2xl md:text-3xl font-bold leading-normal text-gray-800'>Redefinir Senha</h1>
-          <p className='text-sm md:text-base text-gray-500 mt-2'>
+          <div className='w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto md:mx-0 mb-4'>
+            <Key size={20} className='text-blue-500' />
+          </div>
+          <h1 className='text-xl md:text-2xl font-bold leading-normal text-gray-800'>Redefinir Senha</h1>
+          <p className='text-sm md:text-xs text-gray-500 mt-2'>
             Digite sua nova senha abaixo para redefinir o acesso à sua conta.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className='space-y-5'>
+        <form onSubmit={handleSubmit} className='space-y-4'>
           
           {/* Nova Senha */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.4 }}
-            className='form-control'
-          >
-            <label className='text-sm font-medium text-gray-700 mb-1 block'>Nova Senha</label>
+          <div className='form-control'>
+            <label className='text-xs font-medium text-gray-700 mb-2 block'>Nova Senha</label>
             <div className='relative'>
-              <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={18} />
+              <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={17} />
               <input 
                 type={showNewPassword ? 'text' : 'password'} 
                 placeholder='Digite sua nova senha' 
                 onChange={(e)=> setNewPassword(e.target.value)}
                 value={newPassword}
-                className='w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all'
+                className='w-full pl-10 pr-10 h-[40px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all bg-inherit'
               />
               <button
                 type='button'
                 onClick={() => setShowNewPassword(!showNewPassword)}
                 className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-500 transition-colors'
               >
-                {showNewPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                {showNewPassword ? <EyeOff size={17} /> : <Eye size={17} />}
               </button>
             </div>
             <p className='text-xs text-gray-500 mt-1.5'>
               A senha deve ter no mínimo 6 caracteres
             </p>
-          </motion.div>
+          </div>
 
           {/* Confirmar Nova Senha */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.5 }}
-            className='form-control'
-          >
-            <label className='text-sm font-medium text-gray-700 mb-1 block'>Confirmar Nova Senha</label>
+          <div className='form-control'>
+            <label className='text-xs font-medium text-gray-700 mb-2 block'>Confirmar Nova Senha</label>
             <div className='relative'>
-              <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={18} />
+              <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={17} />
               <input 
                 type={showConfirmPassword ? 'text' : 'password'} 
                 placeholder='Confirme sua nova senha' 
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 value={repeatPassword}
-                className='w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all'
+                className='w-full pl-10 pr-10 h-[40px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all bg-inherit'
               />
               <button
                 type='button'
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-500 transition-colors'
               >
-                {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                {showConfirmPassword ? <EyeOff size={17} /> : <Eye size={17} />}
               </button>
             </div>
-          </motion.div>
+          </div>
+
+          {/* Error content */}
+          <div>
+            <p className='text-red-500 text-xs'>{error}</p>
+          </div>
 
           {/* Requisitos de senha */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4, delay: 0.6 }}
-            className='bg-blue-50 rounded-lg p-3 space-y-1.5'
-          >
+          <div className='bg-blue-50 rounded-lg p-3 space-y-1.5'>
             <p className='text-xs font-semibold text-blue-700 mb-1'>Sua senha deve conter:</p>
             <div className='flex items-center gap-2'>
-              <div className='w-3 h-3 rounded-full bg-gray-300'></div>
+              <div className='w-2 h-2 rounded-full bg-gray-300'></div>
               <span className='text-xs text-gray-600'>Mínimo de 6 caracteres</span>
             </div>
             <div className='flex items-center gap-2'>
-              <div className='w-3 h-3 rounded-full bg-gray-300'></div>
+              <div className='w-2 h-2 rounded-full bg-gray-300'></div>
               <span className='text-xs text-gray-600'>Pelo menos uma letra maiúscula</span>
             </div>
             <div className='flex items-center gap-2'>
-              <div className='w-3 h-3 rounded-full bg-gray-300'></div>
+              <div className='w-2 h-2 rounded-full bg-gray-300'></div>
               <span className='text-xs text-gray-600'>Pelo menos um número</span>
             </div>
-          </motion.div>
+          </div>
 
           {/* Botão de Redefinir */}
-          <motion.button 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.7 }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+          <button 
+            disabled={isLoading}
             type='submit'
-            className='w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-2.5 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg mt-2 flex items-center justify-center gap-2'
+            className='w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold h-[40px] text-sm rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg mt-2 flex items-center justify-center gap-2'
           >
-            <Key size={18} />
+            <Key size={16} />
             <span>Redefinir Senha</span>
-          </motion.button>
-        </form>
+          </button>
 
-        {/* Divisor para mobile */}
-        <div className='mt-6 pt-4 border-t border-gray-200 md:hidden'>
-          <p className='text-center text-xs text-gray-400'>
-            Precisa de ajuda? <a href='#' className='text-blue-500'>Fale conosco</a>
+          {/* Link para cadastro */}
+          <p className='text-center text-xs text-gray-600 mt-5'>
+            Não tem uma conta?{' '}
+            <Link to={'/signup'} className='text-xs text-blue-500 hover:text-blue-600 font-semibold hover:underline'>
+              Cadastre-se gratuitamente
+            </Link>
           </p>
-        </div>
-      </motion.div>
 
-      {/* right-side - mockup Samsung Note 10 com animação */}
+          {/* Divisor */}
+          <div className='relative my-6'>
+            <div className='absolute inset-0 flex items-center'>
+              <div className='w-full border-t border-gray-200'></div>
+            </div>
+            <div className='relative flex justify-center text-xs'>
+              <span className='px-3 bg-white text-gray-400'>ou continue com</span>
+            </div>
+          </div>
+
+          {/* Botões de redes sociais */}
+          <div className='space-y-2'>
+            <button className='w-full flex items-center justify-center gap-3 border border-gray-300 rounded-lg py-2 hover:bg-gray-50 transition-colors'>
+              <span className='text-xs'>&copy;</span>
+              <span className='text-xs text-gray-700'>Google</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {/* right-side - mockup Samsung Note 10 */}
       <div className='w-full md:w-[60%] flex flex-col items-center justify-center md:block order-1 md:order-2'>
         
         {/* Container do mockup */}
@@ -270,12 +266,7 @@ export const ResetPasswordPage = () => {
                     </div>
                     
                     {/* Header com mensagem */}
-                    <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.3 }}
-                      className="px-2 pb-2 text-center"
-                    >
+                    <div className="px-2 pb-2 text-center">
                       <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-2">
                         <Key size={20} className="text-white" />
                       </div>
@@ -284,12 +275,11 @@ export const ResetPasswordPage = () => {
                         Crie uma nova senha<br />
                         para sua conta Samsung
                       </p>
-                    </motion.div>
+                    </div>
                     
                     {/* Grid de Apps One UI com animação nos ícones */}
                     <div className="px-2">
                       <div className="grid grid-cols-4 gap-1 gap-y-1.5">
-                        
                         {[
                           { icon: "📱", label: "Galaxy", color: "blue", delay: 0.1 },
                           { icon: "🛒", label: "Loja", color: "green", delay: 0.2 },
@@ -379,16 +369,11 @@ export const ResetPasswordPage = () => {
         </div>
 
         {/* Informações adicionais */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.8 }}
-          className='hidden md:block mt-6 text-center'
-        >
+        <div className='hidden md:block mt-6 text-center'>
           <p className='text-xs text-gray-500'>
             Precisa de ajuda? <a href='#' className='text-blue-500 hover:text-blue-600'>Fale com o suporte</a>
           </p>
-        </motion.div>
+        </div>
       </div>
       
     </div>

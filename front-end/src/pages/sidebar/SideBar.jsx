@@ -6,25 +6,23 @@ import { useAuthStore } from '../../store/authStore';
 
 export const SideBar = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const location = useLocation(); // Pega a rota atual
+    const location = useLocation();
     
     const handleSideBar = () => {
         setSidebarOpen((prev) => !prev)
     }
     
     const sidebarVariants = {
-        open: { width: 320 },
-        closed: { width: 80 }
+        open: { width: 280 },
+        closed: { width: 70 }
     }
 
     const { logout } = useAuthStore();
 
-    // Função para verificar se o link está ativo
     const isActive = (path) => {
         return location.pathname === path;
     }
 
-    // Array com os links e suas respectivas rotas
     const menuItems = [
         { icon: Home, text: "Dashboard", path: "/" },
         { icon: LineChartIcon, text: "Analytic", path: "/analytic" },
@@ -41,9 +39,9 @@ export const SideBar = () => {
             initial="open"
             animate={sidebarOpen ? "open" : "closed"}
             transition={{ duration: 0.3 }}
-            className='sticky top-0 left-0 h-screen border-r border-[#ccc] shadow-xl bg-white p-3 px-5 overflow-hidden'
+            className='sticky top-0 left-0 h-screen border-r border-[#ccc] shadow-xl bg-white p-2 px-3 overflow-hidden'
         >
-            <div className='w-full h-[50px] mt-6 flex items-center justify-center'>
+            <div className='w-full h-[45px] mt-4 flex items-center justify-center'>
                 <AnimatePresence mode="wait">
                     {sidebarOpen ? (
                         <motion.h1 
@@ -52,7 +50,7 @@ export const SideBar = () => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.2 }}
-                            className='text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent'
+                            className='text-lg font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent'
                         >
                             CellShopp
                         </motion.h1>
@@ -65,13 +63,13 @@ export const SideBar = () => {
                             transition={{ duration: 0.2 }}
                             className='text-blue-600'
                         >
-                            <Box size={24} />
+                            <Box size={18} />
                         </motion.div>
                     )}
                 </AnimatePresence>
             </div>
 
-            <div className='mt-4 w-full'>
+            <div className='mt-3 w-full'>
                 {menuItems.map((item, index) => {
                     const active = isActive(item.path);
                     return (
@@ -79,7 +77,7 @@ export const SideBar = () => {
                             key={index}
                             to={item.path}
                             className={`
-                                w-full h-[50px] flex items-center gap-4 rounded-lg mb-3 p-2 transition-all duration-200 group
+                                w-full h-[45px] flex items-center gap-3 rounded-lg mb-2 p-2 transition-all duration-200 group relative
                                 ${active 
                                     ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md' 
                                     : 'hover:bg-blue-50 hover:text-blue-600 text-gray-700'
@@ -88,13 +86,13 @@ export const SideBar = () => {
                         >
                             <item.icon 
                                 className={`
-                                    transition-all duration-200
+                                    transition-all duration-200 flex-shrink-0
                                     ${active 
                                         ? 'text-white' 
                                         : 'text-gray-500 group-hover:text-blue-600'
                                     }
                                 `} 
-                                size={20}
+                                size={15}
                             />
                             <AnimatePresence>
                                 {sidebarOpen && (
@@ -104,7 +102,7 @@ export const SideBar = () => {
                                         exit={{ opacity: 0, width: 0 }}
                                         transition={{ duration: 0.2 }}
                                         className={`
-                                            transition-all duration-200
+                                            transition-all duration-200 text-sm truncate
                                             ${active 
                                                 ? 'font-semibold text-white' 
                                                 : 'group-hover:text-blue-600'
@@ -120,7 +118,7 @@ export const SideBar = () => {
                             {active && sidebarOpen && (
                                 <motion.div
                                     layoutId="active-indicator"
-                                    className="ml-auto w-1 h-8 bg-white rounded-full shadow-sm"
+                                    className="ml-auto w-1 h-6 bg-white rounded-full shadow-sm flex-shrink-0"
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
@@ -132,7 +130,7 @@ export const SideBar = () => {
                             {active && !sidebarOpen && (
                                 <motion.div
                                     layoutId="active-indicator-mini"
-                                    className="absolute right-0 w-1 h-8 bg-blue-600 rounded-full"
+                                    className="absolute right-0 w-1 h-6 bg-blue-600 rounded-full"
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
@@ -152,32 +150,32 @@ export const SideBar = () => {
             </div>
 
             {/* Botão Toggle Sidebar */}
-            <div className='flex items-center justify-center w-[50px] h-[50px] mx-auto mt-6'>
+            <div className='flex items-center justify-center w-[45px] h-[45px] mx-auto mt-4'>
                 <button 
                     onClick={handleSideBar} 
                     className={`
-                        text-white flex items-center justify-center w-[40px] h-[40px] rounded-lg transition-all duration-200
+                        text-white flex items-center justify-center w-[36px] h-[36px] rounded-lg transition-all duration-200
                         ${sidebarOpen 
                             ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800' 
                             : 'bg-gray-200 hover:bg-blue-100 text-blue-600'
                         }
                     `}
                 >
-                    {sidebarOpen ? <SquareChevronLeft size={20} /> : <SquareChevronRight size={20} />}
+                    {sidebarOpen ? <SquareChevronLeft size={18} /> : <SquareChevronRight size={18} />}
                 </button>
             </div>
 
             {/* Botão Logout */}
-            <div className='w-full mt-12 absolute bottom-8 left-0 px-3'>
+            <div className='w-full mt-8 absolute bottom-6 left-0 px-2'>
                 <Link
                     to="/login"
                     onClick={() => logout()}
                     className={`
-                        w-full h-[50px] flex items-center gap-4 rounded-lg mb-3 p-2 transition-all duration-200 group
+                        w-full h-[45px] flex items-center gap-3 rounded-lg mb-2 p-2 transition-all duration-200 group relative
                         hover:bg-red-50 hover:text-red-600 text-gray-700
                     `}
                 >
-                    <LogOut className="text-gray-500 group-hover:text-red-600 transition-colors" size={20} />
+                    <LogOut className="text-gray-500 group-hover:text-red-600 transition-colors flex-shrink-0" size={18} />
                     <AnimatePresence>
                         {sidebarOpen && (
                             <motion.span
@@ -185,7 +183,7 @@ export const SideBar = () => {
                                 animate={{ opacity: 1, width: 'auto' }}
                                 exit={{ opacity: 0, width: 0 }}
                                 transition={{ duration: 0.2 }}
-                                className="text-gray-700 group-hover:text-red-600 transition-colors"
+                                className="text-gray-700 group-hover:text-red-600 transition-colors text-sm truncate"
                             >
                                 Sair
                             </motion.span>

@@ -5,8 +5,8 @@
   "main": "back-end/src/app.js",
   "scripts": {
     "dev": "nodemon back-end/src/app.js",
-    "start": "NODE_ENV=production node back-end/src/app.js",
-    "build": "NODE_ENV=production npm install && npm install --prefix front-end && npm run build --prefix front-end"
+    "start": "node back-end/src/app.js",
+    "build": "npm install --prefix front-end && npm run build --prefix front-end"
   },
   "repository": {
     "type": "git",

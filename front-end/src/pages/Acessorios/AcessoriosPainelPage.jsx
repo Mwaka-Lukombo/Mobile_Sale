@@ -196,7 +196,7 @@ export const AcessoriosPainelPage = () => {
 
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+            <h1 className="text-2xl  font-bold text-gray-800">
               Acessórios
             </h1>
 
@@ -207,14 +207,14 @@ export const AcessoriosPainelPage = () => {
                 <div className="relative">
                   <Search
                     className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-                    size={20}
+                    size={17}
                   />
                   <input
                     type="text"
                     placeholder="Pesquisar acessório pelo nome"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full sm:w-80 h-12 pl-11 pr-4 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                    className="w-full text-sm sm:w-80 pl-10 h-[40px] rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
                   />
                 </div>
               </div>
@@ -225,10 +225,10 @@ export const AcessoriosPainelPage = () => {
                   setShowModal((prev) => !prev);
                   resetForm();
                 }}
-                className="flex items-center justify-center gap-2 h-12 px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors shadow-sm"
+                className="flex items-center p-2 justify-center gap-2 h-[40px] bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors shadow-sm"
               >
-                <Plus size={20} />
-                <span>Criar Acessório</span>
+                <Plus size={17} />
+                <span className="text-sm">Criar Acessório</span>
               </button>
             </div>
           </div>
@@ -274,27 +274,26 @@ export const AcessoriosPainelPage = () => {
                               className="w-full h-full object-cover"
                             />
                           </div>
-                          <span className="font-medium text-gray-800">
+                          <span className="text-xs font-bold text-gray-800">
                             {item?.name}
                           </span>
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="inline-flex px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+                        <span className="inline-flex px-2 py-1 rounded-full text-xs  bg-blue-100 text-blue-700">
                           {item?.category}
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="font-semibold text-gray-800">
-                          {item?.price} <b className="text-sm">MZN</b>
+                        <span className="text-xs font-semibold text-gray-800">
+                          {item?.price} MZN
                         </span>
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex gap-0.5">
-                          <span className={`
-                            w-[25px] h-[25px] text-color-black ${item?.stock < 100 ? "bg-orange-400" : "bg-green-500"} rounded-full
-                          flex items-center justify-center text-xs font-bold
-                            `}>{item?.stock}</span>
+                          <span className={`inline-flex items-center justify-center w-[20px] h-[20px] rounded-full text-xs font-medium ${item?.stock < 5 ? "bg-red-500" : "bg-green-300"} text-color-black
+                          text-xs font-light
+                          `}>{item?.stock}</span>
                         </div>
                       </td>
                       <td className="px-6 py-4">
@@ -303,13 +302,13 @@ export const AcessoriosPainelPage = () => {
                             onClick={() => updateItems(item)}
                             className="text-blue-600 hover:text-blue-800 transition-colors"
                           >
-                            <Pencil size={18} />
+                            <Pencil size={12} />
                           </button>
                           <button
                             onClick={() => deleteItem(item?._id)}
                             className="text-red-600 hover:text-red-800 transition-colors"
                           >
-                            <Trash size={18} />
+                            <Trash size={12} />
                           </button>
                         </div>
                       </td>
@@ -317,7 +316,7 @@ export const AcessoriosPainelPage = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="5" className="px-6 py-8 text-center text-gray-400">
+                    <td colSpan="5" className="px-3 py-4 text-center text-gray-400">
                       Nenhum acessório encontrado
                     </td>
                   </tr>
@@ -348,10 +347,10 @@ export const AcessoriosPainelPage = () => {
                         />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-800">
+                        <h3 className="text-xs font-bold text-gray-800">
                           {item?.name}
                         </h3>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-xs text-gray-500">
                           {item?.category}
                         </p>
                       </div>
@@ -361,28 +360,22 @@ export const AcessoriosPainelPage = () => {
                         onClick={() => updateItems(item)}
                         className="text-blue-600 p-1"
                       >
-                        <Pencil size={16} />
+                        <Pencil size={12} />
                       </button>
                       <button
                         onClick={() => deleteItem(item?._id)}
                         className="text-red-600 p-1"
                       >
-                        <Trash size={16} />
+                        <Trash size={12} />
                       </button>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
-                      <span className="text-gray-500">Preço:</span>
-                      <p className="font-semibold text-gray-800">
-                        {item?.price} <b>MZN</b>
+                      <span className="text-xs text-gray-500">Preço:</span>
+                      <p className="text-xs font-semibold text-gray-800">
+                        {item?.price} MZN
                       </p>
-                    </div>
-                    <div>
-                      <span className="text-gray-500">Avaliação:</span>
-                      <div className="flex gap-0.5 mt-1">
-                        {renderStars(item?.stars || 0)}
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -427,7 +420,7 @@ export const AcessoriosPainelPage = () => {
               <button 
               onClick={() => getAcessories(Page)}
               className={`join-item btn p-2 ${currentPage === Page ? "bg-secondary-blue  text-white" : "border"}
-              w-[50px] h-[50px] font-semibold
+              w-[40px] h-[40px] text-xs font-semibold
             `}>{Page}</button>
             )
           })}
@@ -467,7 +460,7 @@ export const AcessoriosPainelPage = () => {
                   }}
                   className="text-white hover:bg-white/20 rounded-lg p-2 transition-colors"
                 >
-                  <X size={24} />
+                  <X size={17} />
                 </button>
               </div>
 
@@ -476,7 +469,7 @@ export const AcessoriosPainelPage = () => {
                 <div className="space-y-4">
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-xs font-medium text-gray-700 mb-2">
                       Nome do Produto
                     </label>
                     <input
@@ -485,19 +478,19 @@ export const AcessoriosPainelPage = () => {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                      className="w-full text-xs pl-3 h-[40px] border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 outline-none"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-xs font-medium text-gray-700 mb-2">
                       Categoria
                     </label>
                     <select 
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                      className="w-full text-xs pl-3 pr-12 h-[40px] border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 outline-none"
                     >
                       <option value="">Selecione a categoria</option>
                       <option value="Fones de ouvidos">Fones de ouvidos</option>
@@ -508,7 +501,7 @@ export const AcessoriosPainelPage = () => {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-xs font-medium text-gray-700 mb-2">
                         Preço (MZN)
                       </label>
                       <input
@@ -517,12 +510,12 @@ export const AcessoriosPainelPage = () => {
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                        className="w-full text-xs pl-3 h-[40px] border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 outline-none"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-xs font-medium text-gray-700 mb-2">
                         Stock
                       </label>
                       <input
@@ -531,13 +524,13 @@ export const AcessoriosPainelPage = () => {
                         value={stock}
                         onChange={(e) => setStock(e.target.value)}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                        className="w-full text-xs pl-3 h-[40px] border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 outline-none"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-xs font-medium text-gray-700 mb-2">
                       Estrelas (Avaliação)
                     </label>
                     <input
@@ -548,12 +541,12 @@ export const AcessoriosPainelPage = () => {
                       placeholder="0 a 5"
                       value={stars}
                       onChange={(e) => setStars(e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                      className="w-full text-xs pl-3 h-[40px] border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 outline-none"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-xs font-medium text-gray-700 mb-2">
                       Descrição
                     </label>
                     <textarea
@@ -561,16 +554,16 @@ export const AcessoriosPainelPage = () => {
                       rows={4}
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none"
+                      className="w-full text-xs p-3 h-[120px] resize-none border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 outline-none"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-xs font-medium text-gray-700 mb-2">
                       Imagem
                     </label>
-                    <label className="w-full h-[100px] flex flex-col items-center justify-center gap-1 border-2 border-dashed border-gray-300 bg-gray-50 cursor-pointer rounded-lg hover:bg-gray-100 transition-colors">
-                      <span className="text-sm text-gray-500">Clique para fazer upload</span>
+                    <label className="w-full h-[80px] flex flex-col items-center justify-center gap-1 border border-dashed border-gray-300 bg-gray-50 cursor-pointer rounded-lg hover:bg-gray-100 transition-colors">
+                      <span className="text-xs text-gray-500">Clique para fazer upload</span>
                       <input
                         type="file"
                         accept="image/*"
@@ -590,7 +583,7 @@ export const AcessoriosPainelPage = () => {
                   <button
                     disabled={isLoading}
                     type="submit"
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium h-[40px] text-sm rounded-lg transition-colors flex items-center justify-center gap-2"
                   >
                     {!isLoading ? (!isUpdating ? "Criar Acessório" : "Atualizar Acessório") : <LoaderComponent size={8} />}
                   </button>
@@ -601,7 +594,7 @@ export const AcessoriosPainelPage = () => {
                       resetForm();
                     }}
                     type="button"
-                    className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-3 px-4 rounded-lg transition-colors"
+                    className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium text-sm h-[40px] rounded-lg transition-colors"
                   >
                     Cancelar
                   </button>

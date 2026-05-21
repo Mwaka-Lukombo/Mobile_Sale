@@ -107,7 +107,7 @@ export const ForgotPasswordPage = () => {
   return (
     <div className='w-full flex flex-col md:flex-row gap-3 min-h-screen bg-[#f7f7f7] py-8 px-[4%] md:py-12 overflow-hidden'>
       
-      {/* left-side - formulário de esqueceu senha */}
+      {/* left-side - formulário de esqueceu senha - Tamanhos ajustados */}
       <motion.div 
         className='w-full md:w-[40%] shadow-xl border border-[#ccc] rounded-xl p-4 md:p-6 bg-white h-auto order-2 md:order-1'
         variants={fadeInLeft}
@@ -123,8 +123,8 @@ export const ForgotPasswordPage = () => {
           transition={{ delay: 0.1 }}
         >
           <Link to={'/login'} className='inline-flex items-center gap-2 text-blue-500 hover:text-blue-600 transition-colors mb-6'>
-            <ArrowLeft size={18} />
-            <span className='text-sm font-medium'>Voltar para o login</span>
+            <ArrowLeft size={16} />
+            <span className='text-xs font-medium'>Voltar para o login</span>
           </Link>
         </motion.div>
 
@@ -140,20 +140,20 @@ export const ForgotPasswordPage = () => {
                 className='flex items-center justify-center'
                 variants={bounceIn}
               >
-                <div className='w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mx-auto md:mx-0 mb-4'>
-                  <Lock size={28} className='text-blue-500' />
+                <div className='w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto md:mx-0 mb-4'>
+                  <Lock size={20} className='text-blue-500' />
                 </div>
               </motion.div>
               
               <motion.h1 
-                className='text-2xl md:text-3xl font-bold leading-normal text-gray-800 text-center md:text-left'
+                className='text-xl md:text-2xl font-bold leading-normal text-gray-800 text-center md:text-left'
                 variants={fadeInUp}
               >
                 Esqueceu a senha?
               </motion.h1>
               
               <motion.p 
-                className='text-sm md:text-base text-gray-500 mt-2 text-center md:text-left'
+                className='text-sm md:text-xs text-gray-500 mt-2 text-center md:text-left'
                 variants={fadeInUp}
                 transition={{ delay: 0.2 }}
               >
@@ -163,7 +163,7 @@ export const ForgotPasswordPage = () => {
 
             <motion.form 
               onSubmit={handleSubmit} 
-              className='space-y-5'
+              className='space-y-4'
               variants={staggerContainer}
               initial="hidden"
               animate="visible"
@@ -173,17 +173,15 @@ export const ForgotPasswordPage = () => {
                 className='form-control'
                 variants={fadeInUp}
               >
-                <label className='text-sm font-medium text-gray-700 mb-1 block'>E-mail</label>
+                <label className='text-xs font-medium text-gray-700 mb-2 block'>E-mail</label>
                 <div className='relative'>
-                  <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={18} />
-                  <motion.input 
+                  <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={17} />
+                  <input 
                     type='email' 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder='seu@email.com' 
-                    className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all'
-                    whileFocus={{ scale: 1.02, borderColor: "#3b82f6" }}
-                    transition={{ duration: 0.2 }}
+                    className='w-full pl-10 h-[40px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all bg-inherit'
                     required
                   />
                 </div>
@@ -213,7 +211,7 @@ export const ForgotPasswordPage = () => {
               <motion.button 
                 type='submit'
                 disabled={isLoading}
-                className='w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-2.5 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg mt-2 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2'
+                className='w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold h-[40px] text-sm rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg mt-2 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2'
                 variants={scaleIn}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -225,7 +223,7 @@ export const ForgotPasswordPage = () => {
                   </>
                 ) : (
                   <>
-                    <Send size={18} />
+                    <Send size={16} />
                     <span>Enviar link de recuperação</span>
                   </>
                 )}
@@ -233,20 +231,38 @@ export const ForgotPasswordPage = () => {
 
               {/* Link para cadastro */}
               <motion.p 
-                className='text-center text-sm text-gray-600 mt-5'
+                className='text-center text-xs text-gray-600 mt-5'
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}
               >
                 Não tem uma conta?{' '}
-                <Link to={'/signup'} className='text-blue-500 hover:text-blue-600 font-semibold hover:underline'>
+                <Link to={'/signup'} className='text-xs text-blue-500 hover:text-blue-600 font-semibold hover:underline'>
                   Cadastre-se gratuitamente
                 </Link>
               </motion.p>
+
+              {/* Divisor */}
+              <div className='relative my-6'>
+                <div className='absolute inset-0 flex items-center'>
+                  <div className='w-full border-t border-gray-200'></div>
+                </div>
+                <div className='relative flex justify-center text-xs'>
+                  <span className='px-3 bg-white text-gray-400'>ou continue com</span>
+                </div>
+              </div>
+
+              {/* Botões de redes sociais */}
+              <div className='space-y-2'>
+                <button className='w-full flex items-center justify-center gap-3 border border-gray-300 rounded-lg py-2 hover:bg-gray-50 transition-colors'>
+                  <span className='text-xs'>&copy;</span>
+                  <span className='text-xs text-gray-700'>Google</span>
+                </button>
+              </div>
             </motion.form>
           </>
         ) : (
-          // Mensagem de sucesso
+          // Mensagem de sucesso - Tamanhos ajustados
           <motion.div 
             className='text-center py-8'
             variants={scaleIn}
@@ -254,11 +270,11 @@ export const ForgotPasswordPage = () => {
             animate="visible"
           >
             <motion.div 
-              className='w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4'
+              className='w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4'
               variants={bounceIn}
             >
               <motion.svg 
-                className='w-8 h-8 text-green-500' 
+                className='w-7 h-7 text-green-500' 
                 fill='none' 
                 stroke='currentColor' 
                 viewBox='0 0 24 24'
@@ -270,27 +286,27 @@ export const ForgotPasswordPage = () => {
               </motion.svg>
             </motion.div>
             <motion.h2 
-              className='text-xl font-bold text-gray-800 mb-2'
+              className='text-lg font-bold text-gray-800 mb-2'
               variants={fadeInUp}
             >
               E-mail enviado!
             </motion.h2>
             <motion.p 
-              className='text-gray-600 mb-4'
+              className='text-xs text-gray-600 mb-3'
               variants={fadeInUp}
               transition={{ delay: 0.1 }}
             >
               Enviamos um link de recuperação de senha para:
             </motion.p>
             <motion.p 
-              className='text-blue-600 font-medium mb-6 break-all'
+              className='text-xs text-blue-600 font-medium mb-5 break-all'
               variants={scaleIn}
               transition={{ delay: 0.2 }}
             >
               {email}
             </motion.p>
             <motion.p 
-              className='text-sm text-gray-500 mb-6'
+              className='text-xs text-gray-500 mb-6'
               variants={fadeInUp}
               transition={{ delay: 0.3 }}
             >
@@ -302,7 +318,7 @@ export const ForgotPasswordPage = () => {
             >
               <Link 
                 to={'/login'} 
-                className='inline-block bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300'
+                className='inline-block bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold h-[40px] px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 flex items-center justify-center text-sm'
               >
                 Voltar para o login
               </Link>
@@ -311,19 +327,14 @@ export const ForgotPasswordPage = () => {
         )}
 
         {/* Divisor para mobile */}
-        <motion.div 
-          className='mt-6 pt-4 border-t border-gray-200 md:hidden'
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.7 }}
-        >
+        <div className='mt-6 pt-4 border-t border-gray-200 md:hidden'>
           <p className='text-center text-xs text-gray-400'>
             Precisa de ajuda? <a href='#' className='text-blue-500'>Fale conosco</a>
           </p>
-        </motion.div>
+        </div>
       </motion.div>
 
-      {/* right-side - mockup Xiaomi */}
+      {/* right-side - mockup Xiaomi (mantido mas com tamanhos ajustados) */}
       <motion.div 
         className='w-full md:w-[60%] flex flex-col items-center justify-center md:block order-1 md:order-2'
         variants={fadeInRight}

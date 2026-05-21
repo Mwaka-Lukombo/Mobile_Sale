@@ -7,7 +7,8 @@ import {
     logout, 
     profile, 
     resetPassword, 
-    signup 
+    signup, 
+    updateProfile
 } from "../controllers/auth.controller.js";
 import { protectedRoute } from "../middlewares/Protected.js";
 
@@ -23,7 +24,8 @@ router.post('/signup',signup);
 router.post('/login',login);
 router.post('/forget-password',forgotPassword);
 router.post('/reset-password/:token',resetPassword);
-router.post('/profile',profile);
+router.post('/profile',protectedRoute,profile);
+router.post('/updateProfile',protectedRoute,updateProfile);
 router.post('/logout',logout);
 router.get('/check',protectedRoute,check);
 router.get('/isAdmin',protectedRoute,isAdmin);

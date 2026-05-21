@@ -355,7 +355,7 @@ export const SignupPage = () => {
           </motion.div>
         </div>
 
-        {/* Informações da loja (apenas no register) COM ANIMAÇÃO */}
+        {/* Informações da loja */}
         <motion.div 
           className='hidden md:block w-full mt-6 md:absolute md:right-0 md:top-[20%] md:w-[calc(50%)] shadow-xl border border-[#ccc] rounded-xl md:rounded-none bg-white'
           variants={mockupAnimations.infoCardEntrance}
@@ -363,144 +363,156 @@ export const SignupPage = () => {
           animate="visible"
         >
           <div className='flex flex-col p-4 px-6'>
-            <h1 className='text-xl md:text-2xl leading-normal font-bold mb-3 text-gray-800'>
+            <h1 className='text-xl  leading-normal font-bold mb-3 text-gray-800'>
               Seu Próximo <br /> SmartPhone<br /> está aqui
             </h1>
-            <p className='text-base md:text-lg mb-4 text-gray-600'>
+            <p className='text-sm mb-4 text-gray-600'>
               As melhores marcas<br /> com os melhores preços.
             </p>
 
             <div className='space-y-2'>
               <div className='flex gap-3 items-center group'>
                 <CarIcon className='w-5 h-5 text-blue-500 group-hover:translate-x-1 transition-transform duration-300' />
-                <p className='text-sm md:text-base text-gray-700'>Entrega rápida e para todo Inhambane</p>
+                <p className='text-xs text-gray-700'>Entrega rápida e para todo Inhambane</p>
               </div>
 
               <div className='flex gap-3 items-center group'>
                 <BanknoteIcon className='w-5 h-5 text-blue-500 group-hover:translate-x-1 transition-transform duration-300' />
-                <p className='text-sm md:text-base text-gray-700'>Parcelas em até 12x</p>
+                <p className='text-xs text-gray-700'>Parcelas em até 12x</p>
               </div>
 
               <div className='flex gap-3 items-center group'>
                 <Lock className='w-5 h-5 text-blue-500 group-hover:translate-x-1 transition-transform duration-300' />
-                <p className='text-sm md:text-base text-gray-700'>Compra 100% Segura</p>
+                <p className='text-xs text-gray-700'>Compra 100% Segura</p>
               </div>
             </div>
           </div>
         </motion.div>
       </motion.div>
 
-      {/* right-side - formulário de cadastro SEM ANIMAÇÃO */}
-      <div className='w-full md:w-[40%] min-h-[550px] shadow-xl border border-[#ccc] rounded-xl p-4 md:p-6 mt-4 md:mt-0 bg-white'>
+      {/* right-side - formulário de cadastro - Tamanhos ajustados como LoginPage */}
+      <div className='w-full md:w-[40%] shadow-xl border border-[#ccc] rounded-xl p-4 md:p-6 mt-4 md:mt-0 bg-white h-auto'>
         
         <div className='text-center md:text-left mb-6'>
-          <h1 className='text-2xl md:text-3xl font-bold leading-normal text-gray-800'>Criar Conta</h1>
-          <p className='text-sm md:text-base text-gray-500 mt-1'>Preencha os dados abaixo para se cadastrar</p>
+          <h1 className='text-xl md:text-2xl font-bold leading-normal text-gray-800'>Criar Conta</h1>
+          <p className='text-sm md:text-xs text-gray-500 mt-2'>Preencha os dados abaixo para se cadastrar</p>
         </div>
 
         <form onSubmit={handleSubmit} className='space-y-4'>
           
           {/* Nome Completo */}
           <div className='form-control'>
-            <label className='text-sm font-medium text-gray-700 mb-1 block'>Nome Completo</label>
+            <label className='text-xs font-medium text-gray-700 mb-2 block'>Nome Completo</label>
             <div className='relative'>
-              <User className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={18} />
+              <User className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={17} />
               <input 
                 type='text' 
                 placeholder='Digite seu nome completo' 
                 onChange={(e) => setName(e.target.value)}
                 value={name}
-                className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all
-                bg-inherit
-                '
+                className='w-full pl-10 h-[40px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all bg-inherit'
               />
             </div>
           </div>
 
           {/* E-mail */}
           <div className='form-control'>
-            <label className='text-sm font-medium text-gray-700 mb-1 block'>E-mail</label>
+            <label className='text-xs font-medium text-gray-700 mb-2 block'>E-mail</label>
             <div className='relative'>
-              <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={18} />
+              <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={17} />
               <input 
                 type='email' 
                 placeholder='seu@email.com' 
                 onChange={(e)=> setEmail(e.target.value)}
-                className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all
-                bg-inherit
-                '
+                value={email}
+                className='w-full pl-10 h-[40px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all bg-inherit'
               />
             </div>
           </div>
 
           {/* Senha */}
           <div className='form-control'>
-            <label className='text-sm font-medium text-gray-700 mb-1 block'>Senha</label>
+            <label className='text-xs font-medium text-gray-700 mb-2 block'>Senha</label>
             <div className='relative'>
-              <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={18} />
+              <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={17} />
               <input 
                 type={showPassword ? 'text' : 'password'} 
                 placeholder='Digite sua senha' 
                 onChange={(e)=> setPassword(e.target.value)}
                 value={password}
-                className='w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all
-                bg-inherit
-                '
+                className='w-full pl-10 pr-10 h-[40px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all bg-inherit'
               />
               <button
                 type='button'
                 onClick={() => setShowPassword(!showPassword)}
-                value={confirmPassword}
                 className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-500 transition-colors'
               >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
               </button>
             </div>
           </div>
 
           {/* Confirmar Senha */}
           <div className='form-control'>
-            <label className='text-sm font-medium text-gray-700 mb-1 block'>Confirmar Senha</label>
+            <label className='text-xs font-medium text-gray-700 mb-2 block'>Confirmar Senha</label>
             <div className='relative'>
-              <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={18} />
+              <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' size={17} />
               <input 
                 type={showConfirmPassword ? 'text' : 'password'} 
                 placeholder='Confirme sua senha' 
                 onChange={(e)=> setConfirmPassword(e.target.value)}
-                className='w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all
-                bg-inherit
-                '
+                value={confirmPassword}
+                className='w-full pl-10 pr-10 h-[40px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all bg-inherit'
               />
               <button
                 type='button'
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-500 transition-colors'
               >
-                {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                {showConfirmPassword ? <EyeOff size={17} /> : <Eye size={17} />}
               </button>
             </div>
           </div>
             
-            {/* Error content */}
-            <div>
-              <p className='text-red-500'>{error}</p>
-            </div>
+          {/* Error content */}
+          <div>
+            <p className='text-red-500 text-xs'>{error}</p>
+          </div>
+
           {/* Botão de Cadastro */}
           <button 
-          disabled={isLoading}
+            disabled={isLoading}
             type='submit'
-            className='w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-2.5 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg mt-2'
+            className='w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold h-[40px] text-sm rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg mt-2'
           >
             {!isLoading ? "Cadastrar" : <LoaderComponent size={7} />}
           </button>
 
           {/* Link para login */}
-          <p className='text-center text-sm text-gray-600 mt-5'>
+          <p className='text-center text-xs text-gray-600 mt-5'>
             Já tem uma conta?{' '}
-            <Link to={'/login'} className='text-blue-500 hover:text-blue-600 font-semibold hover:underline'>
+            <Link to={'/login'} className='text-xs text-blue-500 hover:text-blue-600 font-semibold hover:underline'>
               Faça login
             </Link>
           </p>
+
+          {/* Divisor */}
+          <div className='relative my-6'>
+            <div className='absolute inset-0 flex items-center'>
+              <div className='w-full border-t border-gray-200'></div>
+            </div>
+            <div className='relative flex justify-center text-xs'>
+              <span className='px-3 bg-white text-gray-400'>ou continue com</span>
+            </div>
+          </div>
+
+          {/* Botões de redes sociais */}
+          <div className='space-y-2'>
+            <button className='w-full flex items-center justify-center gap-3 border border-gray-300 rounded-lg py-2 hover:bg-gray-50 transition-colors'>
+              <span className='text-xs'>&copy;</span>
+              <span className='text-xs text-gray-700'>Google</span>
+            </button>
+          </div>
         </form>
       </div>
       

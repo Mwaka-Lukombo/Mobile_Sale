@@ -75,6 +75,20 @@ export const useAuthStore = create((set,get) => ({
             set({isChecking:false});
         }
     },
+    update:async(data)=>{
+       set({isLoading:true});
+       try {
+         const res = await axiosInstance.post(`/auth/updateProfile`,data);
+         toast.success(res.data.message);
+
+         await get().check();
+         
+       } catch (error) {
+         toast.error(error?.response?.data?.message);
+       }finally{
+        set({isLoading:false});
+       }
+    },
     logout:async()=>{
      try{
        const res = await axiosInstance.post(`/auth/logout`);

@@ -5,7 +5,10 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true, minLength: 6 },
-  profile: { type: String },
+  profile:{
+    url:{type:String},
+    public_id:{type:String}
+  },
   lastAccess:{type:Date},
   carrinho: [
     {
@@ -16,7 +19,7 @@ const userSchema = new mongoose.Schema({
       },
       type:{
         type:String,
-        enum:["Product","Acessorios","Tablet"]
+        enum:["Product","Acessorio","Tablet"]
       },
       quantity: {
         type: Number,
