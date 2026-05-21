@@ -27,6 +27,7 @@ app.use(cors({origin:"https://mobile-sale.onrender.com",credentials:true}));
 //Rotes
 app.use(Routes);
 
+//Quando estivermos em producao
 if(process.env.NODE_ENV === "production"){
     app.use(express.static(path.join(__dirname,"front-end","dist")));
     app.use(/.*/,(req,res)=>{
