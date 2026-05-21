@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon back-end/src/app.js",
     "start": "node back-end/src/app.js",
-    "build": "npm install --prefix front-end && npm run build --prefix front-end"
+    "build": "npm install --prefix front-end && npm install --prefix back-end && npm run build --prefix front-end"
   },
   "repository": {
     "type": "git",
