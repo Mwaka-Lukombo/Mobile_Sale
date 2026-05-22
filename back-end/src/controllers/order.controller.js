@@ -90,7 +90,7 @@ export const payment = async(req,res)=>{
             price:product.price,
             subtotal,
             name:product.name,
-            image:product.image
+            image:product?.image.url
          });
       }
 
@@ -126,6 +126,35 @@ export const payment = async(req,res)=>{
    }
 }
 
+
+export const getMyOrders = async (req, res) => {
+
+   const { _id: userId } = req.user;
+
+   try {
+
+      const orders = await Order.find({ userId })
+         .sort({ createdAt: -1 });
+
+      const totalSpent = orders.reduce(
+         (acc, order) => acc + order.total,
+         0
+      );
+
+      res.status(200).json({
+         orders,
+         totalSpent
+      });
+
+   } catch (error) {
+
+      console.log(error?.message);
+
+      res.status(500).json({
+         message: "Internal Server Error"
+      });
+   }
+}
 
 
 

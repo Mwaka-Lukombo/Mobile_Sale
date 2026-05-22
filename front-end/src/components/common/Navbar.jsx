@@ -13,7 +13,8 @@ import {
   ArrowRight,
   Plus,
   Minus,
-  Trash
+  Trash,
+  Loader
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { useProductHome } from '../../store/productHome';
@@ -358,8 +359,13 @@ export const Navbar = () => {
                         <button 
                         onClick={()=> payment()}
                         disabled={isLoading} 
-                        className='w-full py-2 bg-primary-blue text-sm text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors'>
-                          Finalizar Compra
+                        className={`w-full py-2 bg-primary-blue text-sm text-white rounded-lg ${isLoading && "bg-black/30 hover:bg-black/30 hover:cursor-not-allowed"} font-semibold hover:bg-blue-600 transition-colors`}>
+                          {!isLoading ? "Finalizar Compra" : 
+                          <div className='flex items-center justify-center gap-1'>
+                            <Loader className='animate-spin' size={20} />
+                            <span>Loading...</span>
+                          </div>
+                          }
                         </button>
                         <button 
                           onClick={() => setIsCartOpen(false)}

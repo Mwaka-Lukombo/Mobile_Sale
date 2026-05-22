@@ -105,7 +105,7 @@ export const login = async(req,res)=>{
             return res.status(400).json({message:"Bad request!"});
          }
          
-         //validPassword
+         
          const isValid = await bcrypt.compare(password,user.password);
 
          if(!isValid){
@@ -154,7 +154,7 @@ export const forgotPassword = async(req,res)=>{
 
         await user.save();
 
-        const link = `http://localhost:3000/reset-password/${tokenForgotPassword}`;
+        const link = `https://mobile-sale.onrender.com/reset-password/${tokenForgotPassword}`;
         
         //sendEMail
         sendForgetEmail(email,link);
@@ -289,9 +289,11 @@ export const updateProfile = async(req,res)=>{
 
     user.profile = imageProfile;
     
-    //cryption
-    const genSalt = await bcrypt.genSalt(12);
-     const passwordHash = await bcrypt.hash(password,genSalt);
+    if(password){
+      //cryption
+      const genSalt = await bcrypt.genSalt(12);
+      const passwordHash = await bcrypt.hash(password,genSalt);
+    }
 
     if(password && password !== ''){
        user.password = passwordHash;

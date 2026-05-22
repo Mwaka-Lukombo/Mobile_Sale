@@ -8,6 +8,8 @@ import {useTabletStore} from './tabletsStore';
 
 export const useOrderStore = create((set,get) => ({
  isPayment:false,
+ orders:[],
+ totalSpent:0,
  payment:async()=>{
     set({isPayment:true});
     try {
@@ -26,7 +28,24 @@ export const useOrderStore = create((set,get) => ({
     }finally{
       set({isPayment:false});
     }
- }
+ },
+ myOrders: async () => {
+
+   try {
+
+      const res = await axiosInstance.get(`/order/myOrders`);
+
+      set({
+         orders: res.data.orders,
+         totalSpent: res.data.totalSpent
+      });
+
+   } catch (error) {
+
+      console.log(error?.message);
+
+   }
+}
 }));
 
 

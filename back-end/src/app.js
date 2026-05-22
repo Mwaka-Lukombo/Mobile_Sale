@@ -7,8 +7,7 @@ import Routes from './routes/routes.js';
 import cors from 'cors';
 import path from 'path';
 
-const __dirname = path.resolve();
-
+const __dinarme = path.resolve();
 
 dns.setServers(['8.8.8.8'], ['1.1.1.1']);
 
@@ -27,12 +26,11 @@ app.use(cors({origin:"https://mobile-sale.onrender.com",credentials:true}));
 //Rotes
 app.use(Routes);
 
-//Quando estivermos em producao
 if(process.env.NODE_ENV === "production"){
-    app.use(express.static(path.join(__dirname,"front-end","dist")));
+    app.use(express.static(path.resolve(__dinarme,"front-end","dist")));
     app.use(/.*/,(req,res)=>{
-        res.sendFile(path.join(__dirname,"front-end","dist","index.html"))
-    });
+        res.sendFile(path.join(__dinarme,"front-end","dist","index.html"))
+    })
 }
 
 

@@ -5,6 +5,8 @@ import { Container } from '../../components/common/Container'
 import { formatNumber } from '../../lib/formatNumbers'
 import { useAuthStore } from '../../store/authStore'
 import toast from 'react-hot-toast'
+import { useOrderStore } from '../../store/orderStore'
+import { useEffect } from 'react'
 
 export const ProfilePage = () => {
   
@@ -13,6 +15,16 @@ export const ProfilePage = () => {
    update,
    isLoading
   } = useAuthStore();
+
+  const {
+    orders,
+    myOrders,
+    totalSpent
+  } = useOrderStore();
+
+  useEffect(()=>{
+    myOrders();
+  },[myOrders])
 
   const [profileData, setProfileData] = useState({
     name: user?.name || '',
@@ -23,61 +35,22 @@ export const ProfilePage = () => {
 
   const [profileImage, setProfileImage] = useState(user?.profile?.url || '')
   const [isEditing, setIsEditing] = useState(false)
-  const fileInputRef = React.useRef(null)
+  const fileInputRef = React.useRef(null);
 
-  // Compras feitas - dados estáticos
-  const purchases = [
-    {
-      id: 1,
-      image: 'https://m.media-amazon.com/images/I/71Yp3z87X4L._AC_UF894,1000_QL80_.jpg',
-      name: 'iPhone 15 Pro',
-      category: 'Smartphones',
-      price: 85000,
-      quantity: 1,
-      date: '15 de Maio de 2025',
-      total: 85000
-    },
-    {
-      id: 2,
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgVkFle0SZjuNH2wORYyOyJdSrlESccIG0jQ&s',
-      name: 'Samsung S24',
-      category: 'Smartphones',
-      price: 75000,
-      quantity: 1,
-      date: '10 de Maio de 2025',
-      total: 75000
-    },
-    {
-      id: 3,
-      image: 'https://www.apple.com/v/airpods-pro/r/images/overview/welcome/hero_startframe__bfinf01b59si_large.jpg',
-      name: 'AirPods Pro',
-      category: 'Acessórios',
-      price: 12500,
-      quantity: 2,
-      date: '08 de Maio de 2025',
-      total: 25000
-    },
-    {
-      id: 4,
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWgJXRBxddDPtOEh6R85gULvMfmwNqcAS8UA&s',
-      name: 'iPad Air',
-      category: 'Tablets',
-      price: 45000,
-      quantity: 1,
-      date: '03 de Maio de 2025',
-      total: 45000
-    },
-    {
-      id: 5,
-      image: 'https://via.placeholder.com/100',
-      name: 'Carregador Rápido',
-      category: 'Acessórios',
-      price: 1500,
-      quantity: 3,
-      date: '01 de Maio de 2025',
-      total: 4500
-    }
-  ]
+
+  
+  const purchases = orders.flatMap(order =>
+  order.items.map(item => ({  
+    ...item,
+    orderId: order._id,
+    totalOrder: order.total,
+    status: order.status,
+    date: new Date(order.createdAt)
+      .toLocaleString("pt-mz"),
+    createdAt: order.createdAt
+  }))
+
+);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -148,6 +121,10 @@ export const ProfilePage = () => {
       fileInputRef.current.value = ''
     }
   }
+
+
+
+  
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -366,28 +343,66 @@ export const ProfilePage = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {purchases.map((purchase) => (
-                      <tr key={purchase.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                        <td className="py-4 px-4">
-                          <div className="flex items-center gap-3">
-                            <img 
-                              src={purchase.image} 
-                              alt={purchase.name}
-                              className="w-12 h-12 object-cover rounded-lg"
-                            />
-                            <span className="text-sm font-medium text-gray-800">{purchase.name}</span>
-                          </div>
-                        </td>
-                        <td className="py-4 px-4">
-                          <span className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded-full">{purchase.category}</span>
-                        </td>
-                        <td className="py-4 px-4 text-sm text-gray-800 font-medium">{formatNumber(purchase.price)} MZN</td>
-                        <td className="py-4 px-4 text-sm text-gray-800 font-medium">{purchase.quantity}</td>
-                        <td className="py-4 px-4 text-sm text-primary-blue font-bold">{formatNumber(purchase.total)} MZN</td>
-                        <td className="py-4 px-4 text-sm text-gray-600">{purchase.date}</td>
-                      </tr>
-                    ))}
-                  </tbody>
+
+                {purchases.map((purchase,index) => (
+
+                  <tr
+                    key={`${purchase.productId}-${index}`}
+                    className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                  >
+
+                    <td className="py-4 px-4">
+
+                      <div className="flex items-center gap-3">
+
+                        <img
+                          src={purchase.image}
+                          alt={purchase.name}
+                          className="w-12 h-12 object-cover rounded-lg"
+                        />
+
+                        <div>
+
+                          <span className="text-sm font-medium text-gray-800 block">
+                            {purchase.name}
+                          </span>
+
+
+                        </div>
+
+                      </div>
+
+                    </td>
+
+                    <td className="py-4 px-4">
+
+                      <span className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded-full">
+                        {purchase.type}
+                      </span>
+
+                    </td>
+
+                    <td className="py-4 px-4 text-sm text-gray-800 font-medium">
+                      {formatNumber(purchase.price)} MZN
+                    </td>
+
+                    <td className="py-4 px-4 text-sm text-gray-800 font-medium">
+                      {purchase.quantity}
+                    </td>
+
+                    <td className="py-4 px-4 text-sm text-primary-blue font-bold">
+                      {formatNumber(purchase.subtotal)} MZN
+                    </td>
+
+                    <td className="py-4 px-4 text-sm text-gray-600">
+                      {purchase.date}
+                    </td>
+
+                  </tr>
+
+                ))}
+
+              </tbody>
                 </table>
               </div>
 
@@ -434,7 +449,8 @@ export const ProfilePage = () => {
                 <div className="flex justify-between items-center md:justify-end">
                   <span className="text-base font-semibold text-gray-800">Total Gasto:</span>
                   <span className="text-2xl font-bold text-primary-blue ml-4">
-                    {formatNumber(purchases.reduce((acc, p) => acc + p.total, 0))} MZN
+                    {/* Aqui */}
+                    {formatNumber(totalSpent)} MZN
                   </span>
                 </div>
               </div>
